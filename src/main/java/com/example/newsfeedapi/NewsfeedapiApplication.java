@@ -1,6 +1,5 @@
 package com.example.newsfeedapi;
 
-import com.example.newsfeedapi.user.Gender;
 import com.example.newsfeedapi.user.User;
 import com.example.newsfeedapi.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -30,7 +29,7 @@ public class NewsfeedapiApplication {
 			wishlist.add("w3");
 			String email = "cunho@gmail.com";
 
-			User u = new User("nguyenanh", email, "https://avatarURL", Gender.MALE, wishlist);
+			User u = new User("nguyenanh", email, "https://avatarURL", "male", wishlist);
 
 //			ctrlAltM(repository, mongoTemplate, email, u);
 			repository.findUsersByName("nguyenanh")
@@ -43,21 +42,4 @@ public class NewsfeedapiApplication {
 		};
 	}
 
-	private static void ctrlAltM(UserRepository repository, MongoTemplate mongoTemplate, String email, User u) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("gmail").is(email));
-
-		List<User> users = mongoTemplate.find(query, User.class);
-
-		try {
-			if(users.isEmpty()) {
-				System.out.println("NONE");
-				repository.insert(u);
-			} else {
-				System.out.println("Already exists" + users);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
 }

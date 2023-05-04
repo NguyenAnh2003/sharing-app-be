@@ -16,11 +16,11 @@ public class User {
     @Indexed(unique = true)
     private String gmail;
     private String avatarURL;
-    private Gender gender;
+    private String gender;
     // favorites ?
     private ArrayList<String> wishlist;
 
-    public User(String name, String gmail, String avatarURL, Gender gender, ArrayList<String> wishlist) {
+    public User(String name, String gmail, String avatarURL, String gender, ArrayList<String> wishlist) {
         this.name = name;
         this.gmail = gmail;
         this.avatarURL = avatarURL;
@@ -52,11 +52,11 @@ public class User {
         this.avatarURL = avatarURL;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
