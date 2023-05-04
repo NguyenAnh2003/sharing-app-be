@@ -1,4 +1,4 @@
-package com.example.newsfeedapi;
+package com.example.newsfeedapi.user;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

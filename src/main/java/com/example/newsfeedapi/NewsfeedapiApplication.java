@@ -1,5 +1,8 @@
 package com.example.newsfeedapi;
 
+import com.example.newsfeedapi.user.Gender;
+import com.example.newsfeedapi.user.User;
+import com.example.newsfeedapi.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,21 +32,32 @@ public class NewsfeedapiApplication {
 
 			User u = new User("nguyenanh", email, "https://avatarURL", Gender.MALE, wishlist);
 
-			Query query = new Query();
-			query.addCriteria(Criteria.where("gmail").is(email));
+//			ctrlAltM(repository, mongoTemplate, email, u);
+			repository.findUsersByName("nguyenanh")
+					.ifPresentOrElse(s -> {
+						System.out.println("User found" + u);
+					}, () -> {
+						System.out.println("Inserting user" + u);
+					});
 
-			List<User> users = mongoTemplate.find(query, User.class);
-
-			try {
-				if(users.isEmpty()) {
-					System.out.println("NONE");
-					repository.insert(u);
-				} else {
-					System.out.println("Already exists" + users);
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
 		};
+	}
+
+	private static void ctrlAltM(UserRepository repository, MongoTemplate mongoTemplate, String email, User u) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("gmail").is(email));
+
+		List<User> users = mongoTemplate.find(query, User.class);
+
+		try {
+			if(users.isEmpty()) {
+				System.out.println("NONE");
+				repository.insert(u);
+			} else {
+				System.out.println("Already exists" + users);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

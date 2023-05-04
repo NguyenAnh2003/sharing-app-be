@@ -1,4 +1,4 @@
-package com.example.newsfeedapi;
+package com.example.newsfeedapi.user;
 
 public enum Gender {
     MALE, FEMALE,
