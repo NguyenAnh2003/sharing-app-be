@@ -13,19 +13,25 @@ public class User {
     @Id
     private String id;
     private String name;
+
+    // find used to login in Mongo?
     @Indexed(unique = true)
     private String gmail;
+    // Password reveal in DB
+    @Indexed(unique = true)
+    private String password;
+
     private String avatarURL;
+
     private String gender;
     // favorites ?
-    private ArrayList<String> wishlist;
 
-    public User(String name, String gmail, String avatarURL, String gender, ArrayList<String> wishlist) {
+    public User(String name, String gmail, String password, String avatarURL, String gender) {
         this.name = name;
         this.gmail = gmail;
+        this.password = password;
         this.avatarURL = avatarURL;
         this.gender = gender;
-        this.wishlist = wishlist;
     }
 
     public String getName() {
@@ -35,6 +41,15 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public String getGmail() {
         return gmail;
@@ -60,11 +75,5 @@ public class User {
         this.gender = gender;
     }
 
-    public ArrayList<String> getWishlist() {
-        return wishlist;
-    }
 
-    public void setWishlist(ArrayList<String> wishlist) {
-        this.wishlist = wishlist;
-    }
 }

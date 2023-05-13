@@ -23,13 +23,9 @@ public class NewsfeedapiApplication {
 	@Bean
 	CommandLineRunner runner(UserRepository repository, MongoTemplate mongoTemplate) {
 		return args -> {
-			ArrayList<String> wishlist = new ArrayList<String>();
-			wishlist.add("w1");
-			wishlist.add("w2");
-			wishlist.add("w3");
 			String email = "cunho@gmail.com";
 
-			User u = new User("nguyenanh", email, "https://avatarURL", "male", wishlist);
+			User u = new User("nguyenanh", email,"password", "https://avatarURL", "male");
 
 //			ctrlAltM(repository, mongoTemplate, email, u);
 			repository.findUsersByName("nguyenanh")
