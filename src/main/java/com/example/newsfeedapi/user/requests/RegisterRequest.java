@@ -1,10 +1,16 @@
 package com.example.newsfeedapi.user.requests;
 
-public record RegisterRequest(
-        String name,
-        String email,
-        String password,
-        String avatarURL,
-        String gender
-){
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class RegisterRequest{
+    private String name;
+    private String gmail;
+    private String password;
+    private String avatarURL;
+    private String gender;
+
 }

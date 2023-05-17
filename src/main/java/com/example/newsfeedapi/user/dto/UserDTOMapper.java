@@ -13,7 +13,6 @@ public class UserDTOMapper implements Function<User, UserDTO> {
         return new UserDTO(
                 user.getId(),
                 user.getName(),
-                user.getGmail(),
                 user.getGender(),
                 user.getAvatarURL()
         );

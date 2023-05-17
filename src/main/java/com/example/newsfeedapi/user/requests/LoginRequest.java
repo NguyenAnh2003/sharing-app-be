@@ -1,7 +1,11 @@
 package com.example.newsfeedapi.user.requests;
 
-public record LoginRequest(
-        String email,
-        String password
-) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class LoginRequest{
+    private String gmail;
+    private String password;
 }
