@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class UserService {
     private final UserDTOMapper mapper;
     private final MongoTemplate mongoTemplate;
 
-
+    /* encode password */
     public UserDTO createUser(RegisterRequest u) {
         // validate exist gmail
         String gmail = String.valueOf(userRepository.findUsersByGmail(u.getGmail()));
@@ -38,11 +39,12 @@ public class UserService {
                 u.getGmail(),
                 u.getPassword(),
                 u.getGender(),
-                u.getAvatarURL());
+                u.getAvatarURL(),
+                LocalDateTime.now());
 
         return mapper.apply(userRepository.insert(user));
     }
-
+    /* encode password */
     public UserDTO checkLogin(LoginRequest u) {
         Optional<User> userFound = userRepository.findUsersByGmailAndPassword(u.getGmail(), u.getPassword());
         if(userFound == null) {
@@ -51,7 +53,9 @@ public class UserService {
         User user = new User(userFound.get().getId(),
                 userFound.get().getName(),
                 userFound.get().getGender(),
-                userFound.get().getAvatarURL());
+                userFound.get().getAvatarURL(),
+                userFound.get().getTimestamp());
+
         return mapper.apply(user);
     }
 
@@ -65,12 +69,14 @@ public class UserService {
         return mapper.apply(user);
     }
 
+    /* Convert timestamp */
     public UserDTO getUserInfo(String id) {
         Optional<User> found = userRepository.findUsersById(id);
         User user = new User(found.get().getId(),
                 found.get().getName(),
                 found.get().getGender(),
-                found.get().getAvatarURL());
+                found.get().getAvatarURL(),
+                found.get().getTimestamp());
         return mapper.apply(user);
     }
 
