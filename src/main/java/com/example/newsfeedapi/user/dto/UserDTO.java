@@ -15,6 +15,5 @@ public class UserDTO{
     private String name;
     private String gender;
     private String avatarURL;
-
     private LocalDateTime timestamp;
 }

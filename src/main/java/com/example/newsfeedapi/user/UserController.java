@@ -28,12 +28,12 @@ public class UserController {
         return ResponseEntity.ok(userService.checkLogin(req));
     }
 
-    @PutMapping(value = "/{id}/update")
+    @PutMapping(value = "/{userId}/update")
     public ResponseEntity<?> userUpdate(@PathVariable String id, @RequestBody UpdateRequest req) {
         return ResponseEntity.ok(userService.updateInfo(id, req));
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{userId}")
     public ResponseEntity<UserDTO> fetchUserInfo(@PathVariable String id) {
       return ResponseEntity.ok(userService.getUserInfo(id));
     }
