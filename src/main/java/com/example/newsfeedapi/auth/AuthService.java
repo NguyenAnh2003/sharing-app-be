@@ -55,6 +55,8 @@ public class AuthService {
     }
 
     public UserDTO getCurrentUserService() {
+        /* Solution */
+        /* https://stackoverflow.com/questions/32052076/how-to-get-the-current-logged-in-user-object-from-spring-security */
         return mapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
