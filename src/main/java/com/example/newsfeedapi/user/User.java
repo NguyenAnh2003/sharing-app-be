@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String gender;
 
 
-    private Role role;
+//    private Role role;
 
     // timestamp most important?
     LocalDateTime timestamp;
@@ -53,7 +53,8 @@ public class User implements UserDetails {
     /* return role of specific user? */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+        return null;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return gmail;
     }
 
     @Override

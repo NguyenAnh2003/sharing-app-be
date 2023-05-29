@@ -26,46 +26,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDTOMapper mapper;
-    private final MongoTemplate mongoTemplate;
 
-    /* encode password */
-    public UserDTO createUser(RegisterRequest u) {
-        // validate exist gmail
-        String gmail = String.valueOf(userRepository.findUsersByGmail(u.getGmail()));
-        if(userRepository.existsUserByGmail(gmail)) {
-            throw new DuplicateRequestException("Gmail already exists");
-        }
-        User user = new User(u.getName(),
-                u.getGmail(),
-                u.getPassword(),
-                u.getGender(),
-                u.getAvatarURL(),
-                LocalDateTime.now());
-
-        return mapper.apply(userRepository.insert(user));
-    }
-    /* encode password */
-    public UserDTO checkLogin(LoginRequest u) {
-        Optional<User> userFound = userRepository.findUsersByGmailAndPassword(u.getGmail(), u.getPassword());
-        if(userFound == null) {
-            throw new RuntimeException("Invalid");
-        }
-        User user = new User(userFound.get().getId(),
-                userFound.get().getName(),
-                userFound.get().getGender(),
-                userFound.get().getAvatarURL(),
-                userFound.get().getTimestamp());
-
-        return mapper.apply(user);
-    }
-
-    public UserDTO updateInfo(String id, UpdateRequest u) {
-        Query query = new Query(Criteria.where("_id").is(new ObjectId(id)));
-        Update update = new Update()
-                .set("name", u.getName())
-                .set("gender", u.getGender())
-                .set("avatarURL", u.getAvatarURL());
-        User user = mongoTemplate.findAndModify(query, update, User.class);
+    public UserDTO updateInfo(String id, UpdateRequest req) {
+        User user = userRepository.findUsersById(id).orElseThrow();
+        user.setName(req.getName());
+        user.setGender(req.getGender());
+        user.setAvatarURL(req.getAvatarURL());
+        userRepository.save(user);
         return mapper.apply(user);
     }
 

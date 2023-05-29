@@ -12,28 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("/api/user")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    // register
-    @PostMapping(value = "/register")
-    public ResponseEntity<?> userRegister(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(userService.createUser(request));
-    }
-
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> userLogin(@RequestBody LoginRequest req) {
-        return ResponseEntity.ok(userService.checkLogin(req));
-    }
-
-    @PutMapping(value = "/{userId}/update")
+    @PutMapping(value = "/{id}/update")
     public ResponseEntity<?> userUpdate(@PathVariable String id, @RequestBody UpdateRequest req) {
         return ResponseEntity.ok(userService.updateInfo(id, req));
     }
 
-    @GetMapping(value = "/{userId}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> fetchUserInfo(@PathVariable String id) {
       return ResponseEntity.ok(userService.getUserInfo(id));
     }
