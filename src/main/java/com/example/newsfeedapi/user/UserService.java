@@ -2,20 +2,10 @@ package com.example.newsfeedapi.user;
 
 import com.example.newsfeedapi.user.dto.UserDTO;
 import com.example.newsfeedapi.user.dto.UserDTOMapper;
-import com.example.newsfeedapi.user.requests.LoginRequest;
-import com.example.newsfeedapi.user.requests.RegisterRequest;
 import com.example.newsfeedapi.user.requests.UpdateRequest;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

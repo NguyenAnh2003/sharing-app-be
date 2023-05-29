@@ -25,7 +25,7 @@ public class AppConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    /* fetch user details encode password */
+    /* fetch user details encode password responsible for checking user credential */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

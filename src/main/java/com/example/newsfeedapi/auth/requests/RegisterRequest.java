@@ -1,4 +1,4 @@
-package com.example.newsfeedapi.user.requests;
+package com.example.newsfeedapi.auth.requests;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,8 @@
 package com.example.newsfeedapi.user;
 
 import com.example.newsfeedapi.user.dto.UserDTO;
-import com.example.newsfeedapi.user.requests.LoginRequest;
-import com.example.newsfeedapi.user.requests.RegisterRequest;
 import com.example.newsfeedapi.user.requests.UpdateRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
