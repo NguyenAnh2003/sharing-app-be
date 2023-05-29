@@ -27,9 +27,6 @@ public class User implements UserDetails {
     private String avatarURL;
     private String gender;
 
-
-//    private Role role;
-
     // timestamp most important?
     LocalDateTime timestamp;
 
