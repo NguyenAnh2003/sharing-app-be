@@ -10,7 +10,5 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> findUsersById(String id);
     Optional<User> findUsersByGmail(String gmail);
-    Optional<User> findUsersByGmailAndPassword(String gmail, String password);
-    boolean existsUserByGmail(String gmail);
 
 }

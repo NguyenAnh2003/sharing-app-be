@@ -29,6 +29,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(req));
     }
 
+    // getCurrentUser API
     @GetMapping()
     public  ResponseEntity<UserDTO> getCurrentUser()
     {
