@@ -20,22 +20,6 @@ public class NewsfeedapiApplication {
 		SpringApplication.run(NewsfeedapiApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner runner(UserRepository repository, MongoTemplate mongoTemplate) {
-		return args -> {
-			String email = "cunho@gmail.com";
 
-			User u = new User("nguyenanh", email,"password", "https://avatarURL", "male");
-
-//			ctrlAltM(repository, mongoTemplate, email, u);
-			repository.findUsersByName("nguyenanh")
-					.ifPresentOrElse(s -> {
-						System.out.println("User found" + u);
-					}, () -> {
-						System.out.println("Inserting user" + u);
-					});
-
-		};
-	}
 
 }

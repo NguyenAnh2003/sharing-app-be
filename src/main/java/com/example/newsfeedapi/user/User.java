@@ -1,79 +1,90 @@
 package com.example.newsfeedapi.user;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
+@NoArgsConstructor
 @Data
 @Document
-public class User {
+@Getter
+@Setter
+public class User implements UserDetails {
     @Id
     private String id;
     private String name;
-
-    // find used to login in Mongo?
     @Indexed(unique = true)
     private String gmail;
-    // Password reveal in DB
-    @Indexed(unique = true)
     private String password;
-
     private String avatarURL;
-
     private String gender;
-    // favorites ?
 
-    public User(String name, String gmail, String password, String avatarURL, String gender) {
+
+//    private Role role;
+
+    // timestamp most important?
+    LocalDateTime timestamp;
+
+    public User(String name, String gmail, String password, String gender, String avatarURL, LocalDateTime timestamp) {
         this.name = name;
         this.gmail = gmail;
         this.password = password;
-        this.avatarURL = avatarURL;
         this.gender = gender;
+        this.avatarURL = avatarURL;
+        this.timestamp = timestamp;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public User(String id, String name, String gender, String avatarURL, LocalDateTime timestamp) {
+        this.id = id;
         this.name = name;
+        this.gender = gender;
+        this.avatarURL = avatarURL;
+        this.timestamp = timestamp;
     }
 
+    /* return role of specific user? */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+        return null;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public String getGmail() {
+    @Override
+    public String getUsername() {
         return gmail;
     }
 
-    public void setGmail(String gmail) {
-        this.gmail = gmail;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getAvatarURL() {
-        return avatarURL;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setAvatarURL(String avatarURL) {
-        this.avatarURL = avatarURL;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getGender() {
-        return gender;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-
 }
+
