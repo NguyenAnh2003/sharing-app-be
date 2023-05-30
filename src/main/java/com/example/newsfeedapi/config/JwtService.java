@@ -24,9 +24,8 @@ public class JwtService {
     // extract all claims header, payload, signature?
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parserBuilder()
+                .parser()
                 .setSigningKey(getSignInKey()) // here we need to encrypt the secret key
-                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -55,6 +54,7 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     // validate token
     public boolean isTokenValid(String token, UserDetails userDetails) {
