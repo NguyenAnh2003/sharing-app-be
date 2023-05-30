@@ -30,7 +30,6 @@ public class AuthController {
     }
 
 
-
     // getCurrentUser API
     @GetMapping()
     public  ResponseEntity<UserDTO> getCurrentUser()
