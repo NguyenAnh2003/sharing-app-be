@@ -1,8 +1,8 @@
 package com.example.newsfeedapi.auth;
 
+import com.example.newsfeedapi.auth.dto.AuthDTO;
 import com.example.newsfeedapi.auth.requests.LoginRequest;
 import com.example.newsfeedapi.auth.requests.RegisterRequest;
-import com.example.newsfeedapi.user.User;
 import com.example.newsfeedapi.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<AuthResponse> register(
+    public ResponseEntity<AuthDTO> register(
             @RequestBody RegisterRequest req)
     {
         return ResponseEntity.ok(authService.register(req));
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<AuthResponse> authenticate(
+    public ResponseEntity<AuthDTO> authenticate(
             @RequestBody LoginRequest req)
     {
         return ResponseEntity.ok(authService.login(req));

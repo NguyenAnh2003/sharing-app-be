@@ -1,5 +1,6 @@
 package com.example.newsfeedapi.auth;
 
+import com.example.newsfeedapi.auth.dto.AuthDTO;
 import com.example.newsfeedapi.auth.requests.LoginRequest;
 import com.example.newsfeedapi.auth.requests.RegisterRequest;
 import com.example.newsfeedapi.config.JwtService;
@@ -25,7 +26,7 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final UserDTOMapper mapper;
 
-    public AuthResponse register(RegisterRequest req) {
+    public AuthDTO register(RegisterRequest req) {
         User user = new User(req.getName(),
                 req.getGmail(),
                 passwordEncoder.encode(req.getPassword()),
@@ -35,10 +36,10 @@ public class AuthService {
         repository.save(user);
         String token = jwtService.tokenGenerator(user);
 
-        return new AuthResponse(token);
+        return new AuthDTO(token);
     }
 
-    public AuthResponse login(LoginRequest req) {
+    public AuthDTO login(LoginRequest req) {
         // if gmail and pass correct
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -51,7 +52,7 @@ public class AuthService {
                 .orElseThrow();
         String token = jwtService.tokenGenerator(user);
 
-        return new AuthResponse(token);
+        return new AuthDTO(token);
     }
 
     public UserDTO getCurrentUserService() {

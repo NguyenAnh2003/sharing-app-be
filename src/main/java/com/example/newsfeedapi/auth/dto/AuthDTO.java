@@ -1,4 +1,4 @@
-package com.example.newsfeedapi.auth;
+package com.example.newsfeedapi.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
+public class AuthDTO {
     private String token;
 }
