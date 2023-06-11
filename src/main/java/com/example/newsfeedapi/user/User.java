@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String gender;
 
     // timestamp most important?
-    LocalDateTime timestamp;
+    private LocalDateTime timestamp;
 
     public User(String name, String gmail, String password, String gender, String avatarURL, LocalDateTime timestamp) {
         this.name = name;
