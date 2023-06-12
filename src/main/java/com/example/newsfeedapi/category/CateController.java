@@ -4,10 +4,9 @@ import com.example.newsfeedapi.category.dto.CateDTO;
 import com.example.newsfeedapi.category.request.CreateCateRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/category")
@@ -21,6 +20,10 @@ public class CateController {
     }
 
     // getALl
+    @GetMapping
+    public ResponseEntity<List<CateDTO>> fetchCategories() {
+        return ResponseEntity.ok(cateService.getAllCategory());
+    }
 
     // getCateById
 

@@ -40,7 +40,7 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(mapper)// extract from model -> DTO
+                .map(mapper)
                 .collect(Collectors.toList());
     }
 }
