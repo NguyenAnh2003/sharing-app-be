@@ -33,13 +33,13 @@ public class PostController {
 
     /* getById */
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<PostDTO>> fetchSinglePost(@PathVariable String id) {
+    public ResponseEntity<PostDTO> fetchSinglePost(@PathVariable String id) {
         return ResponseEntity.ok(service.getPostById(id));
     }
 
     /* userId */
     @GetMapping(value = "userId")
-    public ResponseEntity<PostDTO> fetchUserPosts(@PathVariable String userId) {
+    public ResponseEntity<List<PostDTO>> fetchUserPosts(@PathVariable String userId) {
         return ResponseEntity.ok(service.getPostByUserId(userId));
     }
 

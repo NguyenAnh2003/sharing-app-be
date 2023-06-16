@@ -47,14 +47,14 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public List<PostDTO> getPostById(String id) {
-        return repository.findById(id).stream()
-                .map(mapper)
-                .collect(Collectors.toList());
+    public PostDTO getPostById(String id) {
+        return mapper.apply(repository.findById(id).orElseThrow());
     }
 
-    public PostDTO getPostByUserId(String userId) {
-        return mapper.apply(repository.findPostByUserId(userId).orElseThrow());
+    public List<PostDTO> getPostByUserId(String userId) {
+        return repository.findPostByUserId(userId)
+                .stream()
+                .map(mapper).collect(Collectors.toList());
     }
 
     /* delete */
