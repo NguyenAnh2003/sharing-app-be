@@ -11,14 +11,11 @@ import java.time.LocalDateTime;
 @Document
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Post {
     @Id
     private String id;
     /* userId,  categoryId */
-    @Id
     private ObjectId userId;
-    @Id
     private ObjectId categoryId;
     // object embedded data user
     // Denormalization
