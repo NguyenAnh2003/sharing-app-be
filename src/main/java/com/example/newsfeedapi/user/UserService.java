@@ -28,12 +28,12 @@ public class UserService {
 
     /* Convert timestamp */
     public UserDTO getUserInfo(String id) {
-        Optional<User> found = userRepository.findUsersById(id);
-        User user = new User(found.get().getId(),
-                found.get().getName(),
-                found.get().getGender(),
-                found.get().getAvatarURL(),
-                found.get().getTimestamp());
+        User found = userRepository.findUsersById(id).orElseThrow();
+        User user = new User(found.getId(),
+                found.getName(),
+                found.getGender(),
+                found.getAvatarURL(),
+                found.getTimestamp());
         return mapper.apply(user);
     }
 

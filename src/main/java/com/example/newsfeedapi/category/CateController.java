@@ -25,6 +25,4 @@ public class CateController {
         return ResponseEntity.ok(cateService.getAllCategory());
     }
 
-    // getCateById
-
 }
