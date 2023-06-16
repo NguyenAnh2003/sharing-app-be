@@ -47,8 +47,10 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public PostDTO getPostById(String id) {
-        return mapper.apply(repository.findById(id).orElseThrow());
+    public List<PostDTO> getPostById(String id) {
+        return repository.findById(id).stream()
+                .map(mapper)
+                .collect(Collectors.toList());
     }
 
     public PostDTO getPostByUserId(String userId) {
