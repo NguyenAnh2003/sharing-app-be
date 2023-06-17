@@ -38,9 +38,9 @@ public class PostController {
     }
 
     /* userId */
-    @GetMapping(value = "userId")
-    public ResponseEntity<List<PostDTO>> fetchUserPosts(@PathVariable String userId) {
-        return ResponseEntity.ok(service.getPostByUserId(userId));
+    @GetMapping(value = "/u/{id}")
+    public ResponseEntity<List<PostDTO>> fetchUserPosts(@PathVariable String id) {
+        return ResponseEntity.ok(service.getPostsByUserId(id));
     }
 
     /* Delete */

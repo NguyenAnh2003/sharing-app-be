@@ -60,10 +60,11 @@ public class PostService {
         return mapper.apply(repository.findById(id).orElseThrow());
     }
 
-    public List<PostDTO> getPostByUserId(String userId) {
-        return repository.findPostByUserId(userId)
+    public List<PostDTO> getPostsByUserId(String userId) {
+        return repository.findAllByUserId(userId).orElseThrow()
                 .stream()
-                .map(mapper).collect(Collectors.toList());
+                .map(mapper)
+                .collect(Collectors.toList());
     }
 
     /* delete */
