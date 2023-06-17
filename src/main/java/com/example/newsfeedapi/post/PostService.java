@@ -49,6 +49,7 @@ public class PostService {
         return mapper.apply(repository.save(post));
     }
     /* read */
+    /* Based on CategoryId */
     public List<PostDTO> getAll() {
         return repository.findAll()
                 .stream()
@@ -73,7 +74,7 @@ public class PostService {
         Post p = repository.findById(id).orElseThrow();
         repository.delete(p);
         boolean existed = repository.existsById(id);
-        return existed ? "Deleted" : "Failed";
+        return existed ? "Failed" : "Deleted";
     }
 
 }
