@@ -1,13 +1,18 @@
 package com.example.newsfeedapi.post;
 
+import com.example.newsfeedapi.category.CateRepository;
+import com.example.newsfeedapi.category.dto.EmbeddedCategoryMapper;
 import com.example.newsfeedapi.post.dto.PostDTO;
 import com.example.newsfeedapi.post.dto.PostDTOMapper;
 import com.example.newsfeedapi.post.requests.CreatePostReq;
 import com.example.newsfeedapi.post.requests.UpdatePostReq;
+import com.example.newsfeedapi.user.UserRepository;
+import com.example.newsfeedapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.bson.types.ObjectId;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,11 +23,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PostService {
     private final PostRepository repository;
+    private final CateRepository cateRepository;
+    private final UserRepository userRepository;
     private final PostDTOMapper mapper;
+    private final EmbeddedUserMapper userMapper;
+    private final EmbeddedCategoryMapper categoryMapper;
     /* create */
     public PostDTO createPostService(CreatePostReq req) {
-        Post post = new Post(new ObjectId(req.getUserId()),
-                new ObjectId(req.getCategoryId()),
+        Post post = new Post(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
+                categoryMapper.apply(cateRepository.findById(req.getCategoryId()).orElseThrow()),
                 req.getTitle(),
                 req.getDescription(),
                 req.getImageURL(), LocalDateTime.now());
@@ -31,8 +40,8 @@ public class PostService {
     /* update */
     public PostDTO updatePostService(String id, UpdatePostReq req) {
         Post post = repository.findById(id).orElseThrow();
-        post.setUserId(new ObjectId(req.getUserId()));
-        post.setCategoryId(new ObjectId(req.getCategoryId()));
+//        post.setUserId(new ObjectId(req.getUserId()));
+//        post.setCategoryId(new ObjectId(req.getCategoryId()));
         post.setTitle(req.getTitle());
         post.setDescription(req.getDescription());
         post.setImageURL(req.getImageURL());
