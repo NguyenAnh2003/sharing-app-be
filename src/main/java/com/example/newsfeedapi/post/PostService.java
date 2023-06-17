@@ -40,8 +40,8 @@ public class PostService {
     /* update */
     public PostDTO updatePostService(String id, UpdatePostReq req) {
         Post post = repository.findById(id).orElseThrow();
-//        post.setUserId(new ObjectId(req.getUserId()));
-//        post.setCategoryId(new ObjectId(req.getCategoryId()));
+        post.setUser(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()));
+        post.setCategory(categoryMapper.apply(cateRepository.findById(req.getCategoryId()).orElseThrow()));
         post.setTitle(req.getTitle());
         post.setDescription(req.getDescription());
         post.setImageURL(req.getImageURL());

@@ -17,9 +17,7 @@ public class Post {
     @Id
     private String id;
     /* userId,  categoryId */
-    @DBRef
     private EmbeddedUser user;
-    @DBRef
     private EmbeddedCategory category;
     // object embedded data user
     // Denormalization
