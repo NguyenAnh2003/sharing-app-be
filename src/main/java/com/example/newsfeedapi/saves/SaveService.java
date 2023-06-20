@@ -6,6 +6,7 @@ import com.example.newsfeedapi.saves.dto.SaveDTO;
 import com.example.newsfeedapi.saves.dto.SaveDTOMapper;
 import com.example.newsfeedapi.saves.request.SaveReq;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class SaveService {
     private  final EmbeddedPostMapper postMapper;
     public SaveDTO createEntityService(SaveReq req) {
         // embedding post object
-        Save o = new Save();
+        Save o = new Save(postMapper.apply(postRepository.findById(req.getPostId()).orElseThrow()),
+                new ObjectId(req.getUserId()));
         return mapper.apply(o);
     }
     public List<SaveDTO> getAllByPostId(String postId) {

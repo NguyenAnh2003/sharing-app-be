@@ -16,4 +16,15 @@ public class Save {
     private EmbeddedPost post;
     private ObjectId userId;
 
+    public Save(String id, EmbeddedPost post, ObjectId userId) {
+        this.id = id;
+        this.post = post;
+        this.userId = userId;
+    }
+
+    public Save(EmbeddedPost post, ObjectId userId) {
+        this.post = post;
+        this.userId = userId;
+    }
+
 }
