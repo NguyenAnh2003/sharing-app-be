@@ -22,17 +22,19 @@ public class LikeService {
 
         return mapper.apply(likeRepository.save(l));
     }
-    public String deleteLikeEntity(String postId, String userId) {
-        Like o = likeRepository.findByPostIdAndUserId(postId, userId).orElseThrow();
+    public String deleteLikeEntity(ObjectId postId, ObjectId userId) {
+        Like o = likeRepository.findByPostIdAndUserId(postId, userId)
+                .orElseThrow();
         likeRepository.delete(o);
         boolean exist = likeRepository.existsByPostIdAndUserId(postId, userId)
                 .orElseThrow();
         return  exist ? "Failed" : "Deleted";
     }
     /* read likes */
-    public List<LikeDTO> getLikesByPostId(String postId) {
-        return likeRepository.findAllByPostId(postId)
-                .orElseThrow()
-                .stream().map(mapper).collect(Collectors.toList());
+    public List<LikeDTO> getLikesByPostId(ObjectId postId) {
+        return likeRepository.findAllByPostId(postId).orElseThrow()
+                .stream()
+                .map(mapper)
+                .collect(Collectors.toList());
     }
 }
