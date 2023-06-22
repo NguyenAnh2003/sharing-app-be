@@ -23,14 +23,15 @@ public class SaveService {
         // embedding post object
         Save o = new Save(postMapper.apply(postRepository.findById(req.getPostId()).orElseThrow()),
                 new ObjectId(req.getUserId()));
-        return mapper.apply(o);
+        return mapper.apply(repository.save(o));
     }
-    public List<SaveDTO> getAllByPostId(String postId) {
-        return repository.findAllByPostId(postId)
-                .stream().map(mapper)
+    public List<SaveDTO> getAllByPostId(ObjectId postId) {
+        return repository.findAllByPostId(postId).orElseThrow()
+                .stream()
+                .map(mapper)
                 .collect(Collectors.toList());
     }
-    public String deleteEntityService(String postId, String userId) {
+    public String deleteEntityService(ObjectId postId, ObjectId userId) {
         Save o = repository.findByPostIdAndUserId(postId, userId)
                 .orElseThrow();
         repository.delete(o);

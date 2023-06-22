@@ -8,6 +8,8 @@ import java.util.function.Function;
 public class SaveDTOMapper implements Function<Save, SaveDTO> {
     @Override
     public SaveDTO apply(Save save) {
-        return null;
+        return new SaveDTO(save.getId(),
+                save.getUserId().toString(),
+                save.getPost());
     }
 }

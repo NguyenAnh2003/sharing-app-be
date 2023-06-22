@@ -1,13 +1,15 @@
 package com.example.newsfeedapi.saves;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SaveRepository extends MongoRepository<Save, String> {
-    Optional<Save> findAllByPostId(String postId);
-    Optional<Save> findByPostIdAndUserId(String postId, String userId);
-    Optional<Boolean> existsByPostIdAndUserId(String postId, String userId);
+    Optional<List<Save>> findAllByPostId(ObjectId postId);
+    Optional<Save> findByPostIdAndUserId(ObjectId postId, ObjectId userId);
+    Optional<Boolean> existsByPostIdAndUserId(ObjectId postId, ObjectId userId);
 }

@@ -10,7 +10,10 @@ public class EmbeddedPostMapper implements Function<Post, EmbeddedPost> {
 
     @Override
     public EmbeddedPost apply(Post post) {
-        return null;
+        return new EmbeddedPost(post.getId(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getImageURL());
     }
 
     @Override
