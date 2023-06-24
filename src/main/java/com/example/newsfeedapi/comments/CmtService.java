@@ -9,6 +9,7 @@ import com.example.newsfeedapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,4 +49,5 @@ public class CmtService {
         boolean exist = repository.existsById(id);
         return exist ? "Failed" : "Deleted";
     }
+
 }
