@@ -21,7 +21,6 @@ public class UserService {
         User user = userRepository.findUsersById(id).orElseThrow();
         user.setName(req.getName());
         user.setGender(req.getGender());
-        user.setAvatarURL(req.getAvatarURL());
         userRepository.save(user);
         return mapper.apply(user);
     }

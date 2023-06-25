@@ -1,12 +1,11 @@
 package com.example.newsfeedapi.user.requests;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class UpdateRequest {
-    String name;
-    String gender;
-    String avatarURL;
+    private String name;
+    private String gender;
 }
