@@ -12,4 +12,5 @@ public interface LikeRepository extends MongoRepository<Like, String> {
     Optional<Like> findByPostIdAndUserId(ObjectId postId, ObjectId userId);
     Optional<Boolean> existsByPostIdAndUserId(ObjectId postId, ObjectId userId);
     Optional<List<Like>> findAllByPostId(ObjectId postId);
+    Optional deleteByPostIdAndUserId(ObjectId postId, ObjectId userId);
 }

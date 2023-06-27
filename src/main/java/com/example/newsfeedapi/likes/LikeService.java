@@ -23,9 +23,9 @@ public class LikeService {
         return mapper.apply(likeRepository.save(l));
     }
     public String deleteLikeEntity(ObjectId postId, ObjectId userId) {
-        Like o = likeRepository.findByPostIdAndUserId(postId, userId)
-                .orElseThrow();
-        likeRepository.delete(o);
+//        Like o = likeRepository.findByPostIdAndUserId(postId, userId)
+//                .orElseThrow();
+        likeRepository.deleteByPostIdAndUserId(postId, userId);
         boolean exist = likeRepository.existsByPostIdAndUserId(postId, userId)
                 .orElseThrow();
         return  exist ? "Failed" : "Deleted";

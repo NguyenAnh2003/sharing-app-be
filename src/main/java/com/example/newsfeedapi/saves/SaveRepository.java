@@ -12,4 +12,5 @@ public interface SaveRepository extends MongoRepository<Save, String> {
     Optional<List<Save>> findAllByPostId(ObjectId postId);
     Optional<Save> findByPostIdAndUserId(ObjectId postId, ObjectId userId);
     Optional<Boolean> existsByPostIdAndUserId(ObjectId postId, ObjectId userId);
+    Optional deleteByPostIdAndUserId(ObjectId postId, ObjectId userId);
 }

@@ -32,9 +32,9 @@ public class SaveService {
                 .collect(Collectors.toList());
     }
     public String deleteEntityService(ObjectId postId, ObjectId userId) {
-        Save o = repository.findByPostIdAndUserId(postId, userId)
-                .orElseThrow();
-        repository.delete(o);
+//        Save o = repository.findByPostIdAndUserId(postId, userId)
+//                .orElseThrow();
+        repository.deleteByPostIdAndUserId(postId, userId);
         boolean exist = repository.existsByPostIdAndUserId(postId, userId)
                 .orElseThrow();
         return exist ? "Failed" : "Deleted";
