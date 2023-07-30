@@ -40,7 +40,7 @@ public class PostService {
     /* update */
     public PostDTO updatePostService(String id, UpdatePostReq req) {
         Post post = repository.findById(id).orElseThrow();
-        post.setUser(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()));
+//        post.setUser(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()));
         post.setCategory(categoryMapper.apply(cateRepository.findById(req.getCategoryId()).orElseThrow()));
         post.setTitle(req.getTitle());
         post.setDescription(req.getDescription());
@@ -51,6 +51,7 @@ public class PostService {
     /* read */
     /* Based on CategoryId */
     public List<PostDTO> getAll() {
+        /* Integrating with FaspAPI parsing to JSON */
         return repository.findAll()
                 .stream()
                 .map(mapper)
