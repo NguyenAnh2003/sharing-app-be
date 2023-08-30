@@ -21,6 +21,10 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     @Autowired
 
+    /*
+    * Enable CORS
+    * https://spring.io/guides/gs/rest-service-cors/
+    * */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http

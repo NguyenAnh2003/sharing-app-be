@@ -43,8 +43,8 @@ public class AuthService {
         // if gmail and pass correct
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        req.getGmail(),
-                        req.getPassword()
+                        req.getGmail().toString(),
+                        req.getPassword().toString()
                 )
         );
 
