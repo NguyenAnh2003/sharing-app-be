@@ -24,7 +24,7 @@ public class AppConfig {
     public UserDetailsService userDetailsService() {
         return gmail -> repository.findUsersByGmail(gmail)
                 .orElseThrow(() -> {
-                    throw new NotFoundException("User not found");
+                    throw new NotFoundException("Invalid gmail");
                 });
     }
 

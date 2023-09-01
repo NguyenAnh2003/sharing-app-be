@@ -49,8 +49,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(
                         req.getGmail().toString(),
                         req.getPassword().toString()
-                )
-        );
+                ));
 
         User user = repository.findUsersByGmail(req.getGmail()).get();
         String token = jwtService.tokenGenerator(user);
