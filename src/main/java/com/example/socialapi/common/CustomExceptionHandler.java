@@ -13,8 +13,8 @@ import java.time.ZonedDateTime;
 public class CustomExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundException ex, WebRequest req) {
+    public ErrorResponse handlerNotFoundException(NotFoundException ex, WebRequest req) {
         ErrorResponse errorResponse = new ErrorResponse(ZonedDateTime.now(), HttpStatus.NOT_FOUND, ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return errorResponse;
     }
 }
