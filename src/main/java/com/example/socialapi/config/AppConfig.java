@@ -1,5 +1,6 @@
 package com.example.socialapi.config;
 
+import com.example.socialapi.common.NotFoundException;
 import com.example.socialapi.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,9 @@ public class AppConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return gmail -> repository.findUsersByGmail(gmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> {
+                    throw new NotFoundException("User not found");
+                });
     }
 
     /* fetch user details encode password responsible for checking user credential */

@@ -48,8 +48,7 @@ public class AuthService {
                 )
         );
 
-        User user = repository.findUsersByGmail(req.getGmail())
-                .orElseThrow();
+        User user = repository.findUsersByGmail(req.getGmail()).get();
         String token = jwtService.tokenGenerator(user);
 
         return new AuthDTO(token);

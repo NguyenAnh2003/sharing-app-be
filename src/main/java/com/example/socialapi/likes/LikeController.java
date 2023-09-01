@@ -21,7 +21,8 @@ public class LikeController {
     @DeleteMapping(value = "/p/{postId}/u/{userId}/delete")
     public ResponseEntity<String> deleteLikeAct(@PathVariable String postId, @PathVariable String userId) {
         // https://stackoverflow.com/questions/34468834/user-likes-in-a-restful-api
-        return ResponseEntity.ok(service.deleteLikeEntity(new ObjectId(postId),new ObjectId(userId)));
+        service.deleteLikeEntity(new ObjectId(postId),new ObjectId(userId));
+        return ResponseEntity.noContent().build();
     }
     @GetMapping(value = "/{postId}")
     public ResponseEntity<List<LikeDTO>> fetchAllByPostId(@PathVariable String postId) {

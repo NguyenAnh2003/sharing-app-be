@@ -16,7 +16,12 @@ public class UserController {
 
     @PutMapping(value = "/{id}/update")
     public ResponseEntity<?> userUpdate(@PathVariable String id, @RequestBody UpdateRequest req) {
-        return ResponseEntity.ok(userService.updateInfo(id, req));
+//        return ResponseEntity.ok(userService.updateInfo(id, req));
+        /*
+        Update user info
+         */
+        userService.updateInfo(id, req);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
