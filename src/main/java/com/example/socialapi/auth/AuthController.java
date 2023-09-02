@@ -3,14 +3,10 @@ package com.example.socialapi.auth;
 import com.example.socialapi.auth.dto.AuthDTO;
 import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
-import com.example.socialapi.common.ErrorResponse;
 import com.example.socialapi.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/api/auth")

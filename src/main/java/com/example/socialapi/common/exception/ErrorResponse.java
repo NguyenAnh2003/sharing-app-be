@@ -1,4 +1,4 @@
-package com.example.socialapi.common;
+package com.example.socialapi.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

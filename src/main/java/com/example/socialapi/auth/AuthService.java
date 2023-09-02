@@ -3,15 +3,12 @@ package com.example.socialapi.auth;
 import com.example.socialapi.auth.dto.AuthDTO;
 import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
-import com.example.socialapi.common.ErrorResponse;
 import com.example.socialapi.config.JwtService;
 import com.example.socialapi.user.User;
 import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.dto.UserDTOMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
