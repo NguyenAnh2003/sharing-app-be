@@ -3,6 +3,7 @@ package com.example.socialapi.auth;
 import com.example.socialapi.auth.dto.AuthDTO;
 import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
+import com.example.socialapi.common.exception.errors.NotFoundException;
 import com.example.socialapi.config.JwtService;
 import com.example.socialapi.user.User;
 import com.example.socialapi.user.UserRepository;
@@ -40,16 +41,21 @@ public class AuthService {
     }
 
     public AuthDTO login(LoginRequest req) {
-        // if gmail and pass correct
-        authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        req.getGmail().toString(),
-                        req.getPassword().toString()
-                ));
-
+        // if gmail and pass correct // check before sending
+        authenticate(req.getGmail().toString(), req.getPassword().toString());
         User user = repository.findUsersByGmail(req.getGmail()).get();
         String token = jwtService.tokenGenerator(user);
         return new AuthDTO(token);
+    }
+
+    private void authenticate(String gmail, String password) {
+        try {
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    gmail, password
+            ));
+        } catch (Exception e) {
+            throw new NotFoundException("Wrong gmail or password");
+        }
     }
 
     public UserDTO getCurrentUserService() {

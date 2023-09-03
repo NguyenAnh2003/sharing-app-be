@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppConfig {
 
     private final UserRepository repository;
-
+    // https://www.toptal.com/spring/spring-security-tutorial
     @Bean
     public UserDetailsService userDetailsService() {
-        return gmail -> repository.findUsersByGmail(gmail)
-                .orElseThrow(() -> {
-                    throw new NotFoundException("Invalid gmail");
-                });
+        return gmail -> repository.findUsersByGmail(gmail).get();
     }
 
     /* fetch user details encode password responsible for checking user credential */
