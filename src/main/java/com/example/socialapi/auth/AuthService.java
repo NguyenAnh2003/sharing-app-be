@@ -5,6 +5,7 @@ import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
 import com.example.socialapi.common.exception.errors.NotFoundException;
 import com.example.socialapi.config.JwtService;
+import com.example.socialapi.config.MyAuthProvider;
 import com.example.socialapi.user.User;
 import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.UserDTO;
@@ -25,6 +26,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
+    private final MyAuthProvider myAuthProvider;
     private final UserDTOMapper mapper;
 
     public AuthDTO register(RegisterRequest req) {
@@ -49,13 +51,9 @@ public class AuthService {
     }
 
     private void authenticate(String gmail, String password) {
-        try {
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    gmail, password
-            ));
-        } catch (Exception e) {
-            throw new NotFoundException("Wrong gmail or password");
-        }
+        myAuthProvider.authenticate(new UsernamePasswordAuthenticationToken(
+                gmail, password
+        ));
     }
 
     public UserDTO getCurrentUserService() {

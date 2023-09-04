@@ -24,7 +24,10 @@ public class AppConfig {
     // https://www.toptal.com/spring/spring-security-tutorial
     @Bean
     public UserDetailsService userDetailsService() {
-        return gmail -> repository.findUsersByGmail(gmail).get();
+        return gmail -> repository.findUsersByGmail(gmail).orElseThrow(
+                () -> {
+                    throw new NotFoundException("Gmail not found");
+                });
     }
 
     /* fetch user details encode password responsible for checking user credential */
