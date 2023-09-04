@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class MyAuthProvider implements AuthenticationProvider {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    /* https://www.youtube.com/watch?v=dDxHIBPzaQ4 */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
             String gmail = authentication.getPrincipal().toString();
