@@ -26,9 +26,7 @@ public class MyAuthProvider implements AuthenticationProvider {
             if(passwordEncoder.matches(password, user.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(user,
                         null, null);
-            } else {
-                throw new NotFoundException("Wrong gmail or password");
-            }
+            } else throw new NotFoundException("Wrong gmail or password");
     }
 
     @Override
