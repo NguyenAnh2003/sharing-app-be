@@ -47,7 +47,7 @@ public class AuthService {
 
     public TokenDTO login(LoginRequest req) {
         // if gmail and pass correct // check before sending
-        authenticate(req.getGmail().toString(), req.getPassword().toString());
+        authenticate(req.getGmail(), req.getPassword());
         User user = repository.findUsersByGmail(req.getGmail()).get();
         String token = jwtService.tokenGenerator(user);
         return new TokenDTO(token);
