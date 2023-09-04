@@ -1,6 +1,7 @@
 package com.example.socialapi.auth;
 
 import com.example.socialapi.auth.dto.AuthDTO;
+import com.example.socialapi.auth.dto.TokenDTO;
 import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
 import com.example.socialapi.user.dto.UserDTO;
@@ -16,14 +17,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<AuthDTO> register(
+    public ResponseEntity<TokenDTO> register(
             @RequestBody RegisterRequest req)
     {
         return ResponseEntity.ok(authService.register(req));
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> authenticate(
+    public ResponseEntity<TokenDTO> authenticate(
             @RequestBody LoginRequest req)
     {
         return ResponseEntity.ok(authService.login(req));
@@ -32,7 +33,7 @@ public class AuthController {
 
     // getCurrentUser API
     @GetMapping()
-    public  ResponseEntity<UserDTO> getCurrentUser()
+    public  ResponseEntity<AuthDTO> getCurrentUser()
     {
         return ResponseEntity.ok(authService.getCurrentUserService());
     }

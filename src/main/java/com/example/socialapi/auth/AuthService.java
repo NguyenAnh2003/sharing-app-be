@@ -1,6 +1,8 @@
 package com.example.socialapi.auth;
 
 import com.example.socialapi.auth.dto.AuthDTO;
+import com.example.socialapi.auth.dto.AuthDTOMapper;
+import com.example.socialapi.auth.dto.TokenDTO;
 import com.example.socialapi.auth.requests.LoginRequest;
 import com.example.socialapi.auth.requests.RegisterRequest;
 import com.example.socialapi.common.exception.errors.NotFoundException;
@@ -28,8 +30,9 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final MyAuthProvider myAuthProvider;
     private final UserDTOMapper mapper;
+    private final AuthDTOMapper authDTOMapper;
 
-    public AuthDTO register(RegisterRequest req) {
+    public TokenDTO register(RegisterRequest req) {
         User user = new User(req.getName(),
                 req.getGmail(),
                 passwordEncoder.encode(req.getPassword()),
@@ -39,15 +42,15 @@ public class AuthService {
         repository.save(user);
         String token = jwtService.tokenGenerator(user);
 
-        return new AuthDTO(token);
+        return new TokenDTO(token);
     }
 
-    public AuthDTO login(LoginRequest req) {
+    public TokenDTO login(LoginRequest req) {
         // if gmail and pass correct // check before sending
         authenticate(req.getGmail().toString(), req.getPassword().toString());
         User user = repository.findUsersByGmail(req.getGmail()).get();
         String token = jwtService.tokenGenerator(user);
-        return new AuthDTO(token);
+        return new TokenDTO(token);
     }
 
     private void authenticate(String gmail, String password) {
@@ -56,9 +59,10 @@ public class AuthService {
         ));
     }
 
-    public UserDTO getCurrentUserService() {
+    public AuthDTO getCurrentUserService() {
         /* Solution */
         /* https://stackoverflow.com/questions/32052076/how-to-get-the-current-logged-in-user-object-from-spring-security */
-        return mapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return authDTOMapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        return mapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
