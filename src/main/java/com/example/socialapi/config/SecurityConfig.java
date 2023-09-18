@@ -25,6 +25,7 @@ public class SecurityConfig {
     /*
     * Enable CORS
     * https://spring.io/guides/gs/rest-service-cors/
+    * https://www.bezkoder.com/spring-boot-jwt-authentication/
     * */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
