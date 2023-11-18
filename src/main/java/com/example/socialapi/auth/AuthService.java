@@ -32,17 +32,18 @@ public class AuthService {
     private final UserDTOMapper mapper;
     private final AuthDTOMapper authDTOMapper;
 
-    public TokenDTO register(RegisterRequest req) {
+    public UserDTO register(RegisterRequest req) {
+        /**
+         * return result for controller
+         */
         User user = new User(req.getName(),
                 req.getGmail(),
                 passwordEncoder.encode(req.getPassword()),
                 req.getGender(),
                 req.getAvatarURL(),
                 LocalDateTime.now());
-        repository.save(user);
-        String token = jwtService.tokenGenerator(user);
-
-        return new TokenDTO(token);
+        User newUser = repository.save(user);
+        return mapper.apply(newUser);
     }
 
     public TokenDTO login(LoginRequest req) {
