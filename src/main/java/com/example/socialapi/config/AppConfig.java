@@ -1,6 +1,7 @@
 package com.example.socialapi.config;
 
 import com.example.socialapi.common.exception.errors.NotFoundException;
+import com.example.socialapi.common.exception.errors.UnauthorizedException;
 import com.example.socialapi.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,7 @@ public class AppConfig {
     public UserDetailsService userDetailsService() {
         return gmail -> repository.findUsersByGmail(gmail).orElseThrow(
                 () -> {
-                    throw new NotFoundException("Gmail not found");
+                    throw new UnauthorizedException("Invalid gmail");
                 });
     }
 
