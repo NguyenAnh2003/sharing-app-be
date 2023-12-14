@@ -3,6 +3,7 @@ package com.example.socialapi.comments;
 import com.example.socialapi.comments.dto.CmtDTO;
 import com.example.socialapi.comments.request.CreateCmtReq;
 import com.example.socialapi.comments.request.UpdateCmtReq;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/comment")
 @AllArgsConstructor
 @Tag(name = "Comment")
+@SecurityRequirement(name = "bearerAuth")
 public class CmtController {
     private final CmtService service;
     @PostMapping(value = "/create")

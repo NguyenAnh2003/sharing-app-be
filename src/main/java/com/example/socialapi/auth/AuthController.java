@@ -7,6 +7,8 @@ import com.example.socialapi.auth.requests.RegisterRequest;
 import com.example.socialapi.user.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,19 +22,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    @Operation(
-            responses = {
-
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200"
-                    ),
-                    @ApiResponse(
-                            description = "Unauthorized",
-                            responseCode = "401"
-                    )
-            }
-    )
+    @Operation(responses = {
+            @ApiResponse(description = "Success",responseCode = "200"),
+            @ApiResponse(description = "Unauthorized",responseCode = "401")})
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest req)
@@ -57,6 +49,7 @@ public class AuthController {
 
 
     // getCurrentUser API
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping()
     public  ResponseEntity<AuthDTO> getCurrentUser()
     {

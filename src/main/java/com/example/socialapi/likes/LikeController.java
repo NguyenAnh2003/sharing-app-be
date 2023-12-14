@@ -2,6 +2,7 @@ package com.example.socialapi.likes;
 
 import com.example.socialapi.likes.dto.LikeDTO;
 import com.example.socialapi.likes.request.LikeReq;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/likes")
 @AllArgsConstructor
 @Tag(name = "Like")
+@SecurityRequirement(name = "bearerAuth")
 public class LikeController {
     private final Logger logger = LoggerFactory.getLogger(LikeController.class);
     private final LikeService service;

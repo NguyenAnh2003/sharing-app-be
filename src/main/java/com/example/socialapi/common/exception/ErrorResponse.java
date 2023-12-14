@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(hidden = true)
 public class ErrorResponse {
     private ZonedDateTime timestamp;
     private HttpStatus httpStatus;

@@ -2,6 +2,7 @@ package com.example.socialapi.user;
 
 import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.requests.UpdateRequest;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/user")
 @AllArgsConstructor
 @Tag(name = "User")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
 

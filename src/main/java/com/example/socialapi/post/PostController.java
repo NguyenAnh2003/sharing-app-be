@@ -3,6 +3,7 @@ package com.example.socialapi.post;
 import com.example.socialapi.post.dto.PostDTO;
 import com.example.socialapi.post.requests.CreatePostReq;
 import com.example.socialapi.post.requests.UpdatePostReq;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/p")
 @AllArgsConstructor
 @Tag(name = "Post")
+@SecurityRequirement(name = "bearerAuth")
 public class PostController {
     private final PostService service;
     @PostMapping(value = "/create")
