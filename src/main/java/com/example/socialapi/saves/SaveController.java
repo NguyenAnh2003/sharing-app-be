@@ -2,6 +2,7 @@ package com.example.socialapi.saves;
 
 import com.example.socialapi.saves.dto.SaveDTO;
 import com.example.socialapi.saves.request.SaveReq;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/saves")
 @AllArgsConstructor
+@Tag(name = "Save")
 public class SaveController {
     private final SaveService service;
     /* create entity */

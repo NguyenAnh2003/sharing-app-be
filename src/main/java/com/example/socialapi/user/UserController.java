@@ -2,6 +2,7 @@ package com.example.socialapi.user;
 
 import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.requests.UpdateRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 @AllArgsConstructor
+@Tag(name = "User")
 public class UserController {
     private final UserService userService;
 

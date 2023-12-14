@@ -2,6 +2,7 @@ package com.example.socialapi.likes;
 
 import com.example.socialapi.likes.dto.LikeDTO;
 import com.example.socialapi.likes.request.LikeReq;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/likes")
 @AllArgsConstructor
+@Tag(name = "Like")
 public class LikeController {
     private final Logger logger = LoggerFactory.getLogger(LikeController.class);
     private final LikeService service;

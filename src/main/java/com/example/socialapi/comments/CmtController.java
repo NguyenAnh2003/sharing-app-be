@@ -3,6 +3,7 @@ package com.example.socialapi.comments;
 import com.example.socialapi.comments.dto.CmtDTO;
 import com.example.socialapi.comments.request.CreateCmtReq;
 import com.example.socialapi.comments.request.UpdateCmtReq;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/comment")
 @AllArgsConstructor
+@Tag(name = "Comment")
 public class CmtController {
     private final CmtService service;
     @PostMapping(value = "/create")
