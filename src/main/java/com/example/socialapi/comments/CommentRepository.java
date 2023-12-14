@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CmtRepository extends MongoRepository<Comment, String> {
+public interface CommentRepository extends MongoRepository<Comment, String> {
     Optional<List<Comment>> findAllByPostId(ObjectId postId);
 }

@@ -1,8 +1,8 @@
 package com.example.socialapi.category;
 
-import com.example.socialapi.category.dto.CateDTO;
-import com.example.socialapi.category.dto.CateDTOMapper;
-import com.example.socialapi.category.request.CreateCateRequest;
+import com.example.socialapi.category.dto.CategoryDTO;
+import com.example.socialapi.category.dto.CategoryDTOMapper;
+import com.example.socialapi.category.request.CreateCategoryRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,17 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class CateService {
-    private final CateRepository repository;
-    private final CateDTOMapper mapper;
+public class CategoryService {
+    private final CategoryRepository repository;
+    private final CategoryDTOMapper mapper;
 
-    public CateDTO createCateService(CreateCateRequest req) {
+    public CategoryDTO createCateService(CreateCategoryRequest req) {
         Category cate = new Category(req.getCategory(), LocalDateTime.now());
         repository.save(cate);
         return mapper.apply(cate);
     }
 
-    public List<CateDTO> getAllCategory() {
+    public List<CategoryDTO> getAllCategory() {
         return repository.findAll()
                 .stream()
                 .map(mapper)

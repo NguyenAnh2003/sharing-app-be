@@ -3,6 +3,6 @@ package com.example.socialapi.category.request;
 import lombok.Data;
 
 @Data
-public class CreateCateRequest {
+public class CreateCategoryRequest {
     private String category;
 }

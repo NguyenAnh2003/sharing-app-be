@@ -1,6 +1,6 @@
 package com.example.socialapi.post;
 
-import com.example.socialapi.category.CateRepository;
+import com.example.socialapi.category.CategoryRepository;
 import com.example.socialapi.category.dto.EmbeddedCategoryMapper;
 import com.example.socialapi.post.dto.PostDTO;
 import com.example.socialapi.post.dto.PostDTOMapper;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PostService {
     private final PostRepository repository;
-    private final CateRepository cateRepository;
+    private final CategoryRepository cateRepository;
     private final UserRepository userRepository;
     private final PostDTOMapper mapper;
     private final EmbeddedUserMapper userMapper;
