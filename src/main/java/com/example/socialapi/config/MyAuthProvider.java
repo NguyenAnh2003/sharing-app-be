@@ -1,6 +1,5 @@
 package com.example.socialapi.config;
 
-import com.example.socialapi.common.exception.errors.NotFoundException;
 import com.example.socialapi.common.exception.errors.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
