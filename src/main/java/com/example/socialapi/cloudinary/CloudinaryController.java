@@ -1,6 +1,5 @@
 package com.example.socialapi.cloudinary;
 
-import com.example.socialapi.cloudinary.request.UploadRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
