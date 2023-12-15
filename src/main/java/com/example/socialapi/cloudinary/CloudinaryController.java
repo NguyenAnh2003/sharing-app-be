@@ -1,5 +1,6 @@
 package com.example.socialapi.cloudinary;
 
+import com.example.socialapi.cloudinary.dto.UploadDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -28,10 +29,10 @@ public class CloudinaryController {
                 @ApiResponse(description = "Success", responseCode = "200"),
                 @ApiResponse(description = "Cannot upload file", responseCode = "500")
                 })
-    public ResponseEntity<?> uploadMediaController(
+    public ResponseEntity<UploadDTO> uploadMediaController(
             @RequestParam("file")MultipartFile request) {
-        String imageURL = cloudinaryService.uploadMediaService(request);
-        if(imageURL != null) return new ResponseEntity(imageURL, HttpStatus.OK);
+        UploadDTO imageURL = cloudinaryService.uploadMediaService(request);
+        if(imageURL != null) return new ResponseEntity(imageURL.getImageURL(), HttpStatus.OK);
         else return new ResponseEntity("Cannot upload file to s3",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
