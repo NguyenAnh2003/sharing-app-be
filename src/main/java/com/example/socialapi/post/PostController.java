@@ -29,9 +29,9 @@ public class PostController {
     }
 
     /* Read integrate with category */
-    @GetMapping()
-    public ResponseEntity<List<PostDTO>> fetchPosts() {
-        return ResponseEntity.ok(service.getAll());
+    @GetMapping(value = "/get-all")
+    public ResponseEntity<List<PostDTO>> fetchPosts(@PathVariable String userId) {
+        return ResponseEntity.ok(service.getAll(userId));
     }
 
     /* getById */
