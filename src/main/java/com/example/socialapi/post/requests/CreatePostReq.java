@@ -7,5 +7,4 @@ public class CreatePostReq {
     private String userId, categoryId;
     private String title, description;
     private String imageURL;
-
 }
