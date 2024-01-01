@@ -10,6 +10,9 @@ import com.example.socialapi.post.requests.UpdatePostReq;
 import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,23 +31,28 @@ public class PostService {
     private final PostDTOMapper mapper;
     private final EmbeddedUserMapper userMapper;
     private final EmbeddedCategoryMapper categoryMapper;
+    private static final Logger logging = LoggerFactory.getLogger(PostService.class);
     /* create */
-    public PostDTO createPostService(CreatePostReq req) {
-        Post post = new Post(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
-                categoryMapper.apply(cateRepository.findById(req.getCategoryId()).orElseThrow()),
-                req.getTitle(),
-                req.getDescription(),
-                req.getImageURL(), LocalDateTime.now());
+    public PostDTO createPostService(String userId, String categoryId,
+                                     String title, String description,
+                                     String imageURL) {
+        logging.trace("creating post in service");
+        Post post = new Post(userMapper.apply(userRepository.findUsersById(new ObjectId(userId)).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
+                categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()),
+                title,
+                description,
+                imageURL, LocalDateTime.now());
         return mapper.apply(repository.save(post));
     }
     /* update */
-    public PostDTO updatePostService(String id, UpdatePostReq req) {
+    public PostDTO updatePostService(String id, String userId,
+                                     String categoryId, String title,
+                                     String description, String imageURL) {
         Post post = repository.findById(id).orElseThrow();
-//        post.setUser(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()));
-        post.setCategory(categoryMapper.apply(cateRepository.findById(req.getCategoryId()).orElseThrow()));
-        post.setTitle(req.getTitle());
-        post.setDescription(req.getDescription());
-        post.setImageURL(req.getImageURL());
+        post.setCategory(categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()));
+        post.setTitle(title);
+        post.setDescription(description);
+        post.setImageURL(imageURL);
         // set
         return mapper.apply(repository.save(post));
     }
@@ -87,12 +95,12 @@ public class PostService {
     }
 
     /* delete */
-    public String deletePost(String id) {
+    public Boolean deletePost(String id) {
         // https://stackoverflow.com/questions/55567213/how-to-check-for-success-failure-in-java-spring-database-queries
         Post p = repository.findById(id).orElseThrow();
         repository.delete(p);
         boolean existed = repository.existsById(id);
-        return existed ? "Failed" : "Deleted";
+        return existed;
     }
 
 }

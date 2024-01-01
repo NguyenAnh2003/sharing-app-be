@@ -4,6 +4,7 @@ import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.dto.UserDTOMapper;
 import com.example.socialapi.user.requests.UpdateRequest;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserService {
     private final UserDTOMapper mapper;
 
     public UserDTO updateInfo(String id, UpdateRequest req) {
-        User user = userRepository.findUsersById(id).orElseThrow();
+        User user = userRepository.findUsersById(new ObjectId(id)).orElseThrow();
         user.setName(req.getName());
         user.setGender(req.getGender());
         userRepository.save(user);
@@ -26,7 +27,7 @@ public class UserService {
 
     /* Convert timestamp */
     public UserDTO getUserInfo(String id) {
-        User found = userRepository.findUsersById(id).orElseThrow();
+        User found = userRepository.findUsersById(new ObjectId(id)).orElseThrow();
         User user = new User(found.getId(),
                 found.getName(),
                 found.getGender(),
