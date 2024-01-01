@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CmtDTO {
+public class CommnetDTO {
     private String id, content;
     private EmbeddedUser user;
     private String postId;

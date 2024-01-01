@@ -1,7 +1,8 @@
 package com.example.socialapi.post;
 
-import com.example.socialapi.category.CateRepository;
+import com.example.socialapi.category.CategoryRepository;
 import com.example.socialapi.category.dto.EmbeddedCategoryMapper;
+import com.example.socialapi.follow.Follow;
 import com.example.socialapi.post.dto.PostDTO;
 import com.example.socialapi.post.dto.PostDTOMapper;
 import com.example.socialapi.post.requests.CreatePostReq;
@@ -13,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PostService {
     private final PostRepository repository;
-    private final CateRepository cateRepository;
+    private final CategoryRepository cateRepository;
     private final UserRepository userRepository;
     private final PostDTOMapper mapper;
     private final EmbeddedUserMapper userMapper;
@@ -46,13 +49,30 @@ public class PostService {
         return mapper.apply(repository.save(post));
     }
     /* read */
-    /* Based on CategoryId */
-    public List<PostDTO> getAll() {
-        /* Integrating with FaspAPI parsing to JSON */
-        return repository.findAll()
-                .stream()
-                .map(mapper)
-                .collect(Collectors.toList());
+    public List<PostDTO> getAll(String userId) {
+        /**
+         * get All post for home page
+         * by using userId to get user posts
+         * userId -> followerId
+         * join followerId to postId
+         * if not return Array[]
+         */
+        List<Post> listOfPosts = new ArrayList<Post>();
+        // define posts array for result fetching
+        List<Post> posts = repository.findAllByUserId(userId).orElseThrow();
+        if(posts.isEmpty()) return Collections.emptyList();
+        else listOfPosts.addAll(posts); // add all posts fetched by userId
+        // fetching followingId by userId
+        List<Post> followingUsersPosts = new ArrayList<Post>();
+        List<Follow> followingUsers = new ArrayList<>(); // get following users by userId
+        if(followingUsers.isEmpty()) return Collections.emptyList();
+        else {followingUsers.forEach(
+                follow -> {
+                    followingUsersPosts.addAll(repository.findAllByUserId(String.valueOf(follow.getFollowingId())).orElseThrow());
+                    listOfPosts.addAll(followingUsersPosts);
+                }
+        );};
+        return listOfPosts.isEmpty() ? Collections.emptyList() : listOfPosts.stream().map(mapper).collect(Collectors.toList());
     }
 
     public PostDTO getPostById(String id) {

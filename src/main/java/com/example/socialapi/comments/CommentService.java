@@ -1,9 +1,9 @@
 package com.example.socialapi.comments;
 
-import com.example.socialapi.comments.dto.CmtDTO;
-import com.example.socialapi.comments.dto.CmtDTOMapper;
-import com.example.socialapi.comments.request.CreateCmtReq;
-import com.example.socialapi.comments.request.UpdateCmtReq;
+import com.example.socialapi.comments.dto.CommnetDTO;
+import com.example.socialapi.comments.dto.CommentDTOMapper;
+import com.example.socialapi.comments.request.CreateCommentReq;
+import com.example.socialapi.comments.request.UpdateCommentReq;
 import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
@@ -16,27 +16,27 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class CmtService {
-    private final CmtRepository repository;
+public class CommentService {
+    private final CommentRepository repository;
     private final UserRepository userRepository;
-    private final CmtDTOMapper mapper;
+    private final CommentDTOMapper mapper;
     private final EmbeddedUserMapper userMapper;
 
-    public CmtDTO createCmtEntityService(CreateCmtReq req) {
+    public CommnetDTO createCmtEntityService(CreateCommentReq req) {
         Comment o = new Comment(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()),
                 new ObjectId(req.getPostId()),
                 req.getContent(),
                 LocalDateTime.now());
         return mapper.apply(repository.save(o));
     }
-    public CmtDTO updateCmtEntityService(String id, UpdateCmtReq req) {
+    public CommnetDTO updateCmtEntityService(String id, UpdateCommentReq req) {
         Comment o = repository.findById(id).orElseThrow();
         o.setUser(userMapper.apply(userRepository.findUsersById(req.getUserId()).orElseThrow()));
         o.setPostId(new ObjectId(req.getPostId()));
         o.setContent(req.getContent());
         return mapper.apply(repository.save(o));
     }
-    public List<CmtDTO> getAllByPostId(ObjectId postId) {
+    public List<CommnetDTO> getAllByPostId(ObjectId postId) {
         return repository.findAllByPostId(postId).orElseThrow()
                 .stream()
                 .map(mapper)

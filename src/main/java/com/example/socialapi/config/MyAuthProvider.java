@@ -22,7 +22,6 @@ public class MyAuthProvider implements AuthenticationProvider {
             String gmail = authentication.getPrincipal().toString();
             String password = authentication.getCredentials().toString();
             UserDetails user = userDetailsService.loadUserByUsername(gmail);
-            System.out.println(user);
             if(passwordEncoder.matches(password, user.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(user,
                         null, null);
