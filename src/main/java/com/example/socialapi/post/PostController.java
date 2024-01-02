@@ -21,8 +21,10 @@ import java.util.List;
 @Tag(name = "Post")
 @SecurityRequirement(name = "bearerAuth")
 public class PostController {
+
     private final PostService service;
     private static final Logger logging = LoggerFactory.getLogger(PostController.class);
+
     @PostMapping(value = "/create")
     public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostReq req) {
         try {

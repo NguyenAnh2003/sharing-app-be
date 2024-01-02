@@ -23,7 +23,7 @@ public class CommentService {
     private final EmbeddedUserMapper userMapper;
 
     public CommnetDTO createCmtEntityService(CreateCommentReq req) {
-        Comment o = new Comment(userMapper.apply(userRepository.findUsersById(new ObjectId(req.getUserId())).orElseThrow()),
+        Comment o = new Comment(userMapper.apply(userRepository.findUserById(new ObjectId(req.getUserId())).orElseThrow()),
                 new ObjectId(req.getPostId()),
                 req.getContent(),
                 LocalDateTime.now());
@@ -31,7 +31,7 @@ public class CommentService {
     }
     public CommnetDTO updateCmtEntityService(String id, UpdateCommentReq req) {
         Comment o = repository.findById(id).orElseThrow();
-        o.setUser(userMapper.apply(userRepository.findUsersById(new ObjectId(req.getUserId())).orElseThrow()));
+        o.setUser(userMapper.apply(userRepository.findUserById(new ObjectId(req.getUserId())).orElseThrow()));
         o.setPostId(new ObjectId(req.getPostId()));
         o.setContent(req.getContent());
         return mapper.apply(repository.save(o));

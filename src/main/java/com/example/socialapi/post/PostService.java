@@ -37,8 +37,8 @@ public class PostService {
     public PostDTO createPostService(String userId, String categoryId,
                                      String title, String description,
                                      String imageURL) {
-        logging.trace("creating post in service");
-        Post post = new Post(userMapper.apply(userRepository.findUsersById(new ObjectId(userId)).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
+        logging.info("creating post in service");
+        Post post = new Post(userMapper.apply(userRepository.findUserById(new ObjectId(userId)).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
                 categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()),
                 title,
                 description,
@@ -50,6 +50,7 @@ public class PostService {
     public PostDTO updatePostService(String id, String userId,
                                      String categoryId, String title,
                                      String description, String imageURL) {
+        logging.info("update post with postId", id);
         Post post = repository.findById(id).orElseThrow();
         post.setCategory(categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()));
         post.setTitle(title);
@@ -61,6 +62,7 @@ public class PostService {
 
     /* read */
     public List<PostDTO> getAll(String userId) {
+        logging.info("get all posts by userId and followingUserId");
         List<Post> listOfPosts = new ArrayList<Post>();
         listOfPosts.clear();
         // define posts array for result fetching
@@ -81,10 +83,12 @@ public class PostService {
     }
 
     public PostDTO getPostById(String id) {
+        logging.info("get single post by postId");
         return mapper.apply(repository.findById(id).orElseThrow());
     }
 
     public List<PostDTO> getPostsByUserId(String userId) {
+        logging.info("get all posts by userId");
         return repository.findAllByUserId(userId).orElseThrow()
                 .stream()
                 .map(mapper)
@@ -93,7 +97,7 @@ public class PostService {
 
     /* delete */
     public Boolean deletePost(String id) {
-        // https://stackoverflow.com/questions/55567213/how-to-check-for-success-failure-in-java-spring-database-queries
+        logging.info("deleting post", id);
         Post p = repository.findById(id).orElseThrow();
         repository.delete(p);
         boolean existed = repository.existsById(id);
