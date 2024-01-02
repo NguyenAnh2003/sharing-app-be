@@ -1,6 +1,7 @@
 package com.example.socialapi.common.exception;
 
 import com.example.socialapi.common.exception.errors.BadRequestException;
+import com.example.socialapi.common.exception.errors.ForbidenException;
 import com.example.socialapi.common.exception.errors.NotFoundException;
 import com.example.socialapi.common.exception.errors.UnauthorizedException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.time.ZonedDateTime;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
+
     // https://www.digitalocean.com/community/tutorials/how-to-troubleshoot-common-http-error-codes
     /* 400 */
     @ExceptionHandler(BadRequestException.class)
@@ -20,19 +22,28 @@ public class CustomExceptionHandler {
     public ErrorResponse handlerBadRequest(BadRequestException e) {
         return getErrorResponse(HttpStatus.BAD_REQUEST, e);
     }
-    /* 403 */
+
+    /* 401 */
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handlerUnauthorized(UnauthorizedException e) {
         return getErrorResponse(HttpStatus.UNAUTHORIZED, e);
     }
+
+    /* 403 */
+    @ExceptionHandler(ForbidenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handlerForbidenException(ForbidenException e) {
+        return getErrorResponse(HttpStatus.FORBIDDEN, e);
+    }
+
     /* 404 */
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handlerNotFoundException(NotFoundException e) {
-    // ErrorResponse errorResponse = new ErrorResponse(ZonedDateTime.now(), HttpStatus.NOT_FOUND, ex.getMessage());
         return getErrorResponse(HttpStatus.NOT_FOUND, e);
     }
+
     private ErrorResponse getErrorResponse(HttpStatus httpStatus, Exception e, WebRequest... req) {
         ErrorResponse errorResponse = new ErrorResponse(ZonedDateTime.now(), httpStatus, e.getMessage());
         return errorResponse;

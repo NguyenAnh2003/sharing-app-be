@@ -13,19 +13,15 @@ import io.swagger.v3.oas.annotations.servers.Server;
 		info = @Info(description = "API DOC for social network",title = "API DOCS social network"),
 		servers = {@Server(description = "Local env",url = "http://localhost:8080")}
 )
-@SecurityScheme(
-		name = "bearerAuth",
-		description = "JWT auth description",
-		scheme = "bearer",
-		type = SecuritySchemeType.HTTP,
-		bearerFormat = "JWT",
-		in = SecuritySchemeIn.HEADER
-)
+
+@SecurityScheme(name = "bearerAuth", description = "JWT auth description", scheme = "bearer",
+				type = SecuritySchemeType.HTTP,
+				bearerFormat = "JWT",
+				in = SecuritySchemeIn.HEADER)
+
 @SpringBootApplication
 public class SocialApiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SocialApiApplication.class, args);
 	}
-
 }
