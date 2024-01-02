@@ -40,20 +40,34 @@ public class SaveController {
     @GetMapping(value = "/{postId}")
     public ResponseEntity<List<SaveDTO>> fetchAllByPostId(@PathVariable String postId) {
         try {
-            logging.debug("get all saved posts");
-            return ResponseEntity.ok(service.getAllByPostId(new ObjectId(postId)));
+            logging.debug("get all saved posts by postId");
+            return ResponseEntity.ok(service.getAllByPostId(postId));
         } catch (Exception e) {
-            logging.error("Internal error cannot get saved posts");
+            logging.error("Internal error cannot get saved posts by postId");
+            return new ResponseEntity("Internal error cannot get saved posts", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /* get all by userId */
+    @GetMapping(value = "/{userId}")
+    public ResponseEntity<List<SaveDTO>> fetchAllByUserId(@PathVariable String userId) {
+        try {
+            logging.debug("get all saved posts by userId");
+            return ResponseEntity.ok(service.getAllByUserId(userId));
+        } catch (Exception e) {
+            logging.error("Internal error cannot get saved posts by userId");
             return new ResponseEntity("Internal error cannot get saved posts", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /* delete entity by postId, userId */
     @DeleteMapping(value = "/p/{postId}/u/{userId}/delete")
-    public ResponseEntity<String> deleteEntity(@PathVariable String postId, @PathVariable String userId) {
+    public ResponseEntity<?> deleteEntity(@PathVariable String postId, @PathVariable String userId) {
         try {
             logging.debug("deleting saved post");
-            return ResponseEntity.ok(service.deleteEntityService(new ObjectId(postId),new ObjectId(userId)));
+            Boolean exist = service.deleteEntityService(postId,userId);
+            if(exist == Boolean.FALSE) return new ResponseEntity("Delete successfully", HttpStatus.OK);
+            else return new ResponseEntity("Cannot delete saved post", HttpStatus.INTERNAL_SERVER_ERROR); // can be server error
         } catch (Exception e) {
             logging.error("Internal error cannot delete saved post");
             return new ResponseEntity("Internal error cannot delete saved post", HttpStatus.INTERNAL_SERVER_ERROR);

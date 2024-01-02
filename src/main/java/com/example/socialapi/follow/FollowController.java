@@ -40,14 +40,14 @@ public class FollowController {
     }
 
     @GetMapping(value = "/get-followers/{userId}")
-    public ResponseEntity<List<?>> getFollowersByUserId(@PathVariable String userId) {
+    public ResponseEntity<List<FollowDTO>> getFollowersByUserId(@PathVariable String userId) {
         try {
-            logging.info("get followers by userId", userId);
+            logging.info("get followers by userId");
             List<FollowDTO> followers = followService.getFollowingUsers(userId);
             if(followers != null) return ResponseEntity.ok(followers);
             else return new ResponseEntity("Cannot get followers", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logging.error("Internal error in get followers w userId", userId);
+            logging.error("Internal error in get followers w userId");
             return new ResponseEntity("Internal error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -56,10 +56,10 @@ public class FollowController {
     public ResponseEntity<?> deleteFollowingUser(@PathVariable String followingUserId,
                                                  @PathVariable String userId) {
         try {
-            logging.info("delete follow entity with userId and followingUserId", userId, followingUserId);
-            Boolean result = followService.deleteFollowingUser(userId, followingUserId);
-            if(result == true) return new ResponseEntity("Cannot unfollow this person", HttpStatus.BAD_REQUEST);
-            else return new ResponseEntity("Delete successfullly", HttpStatus.OK);
+            logging.info("delete follow entity with userId and followingUserId");
+            Boolean exist = followService.deleteFollowingUser(userId, followingUserId);
+            if(exist) return new ResponseEntity<>("Cannot unfollow this person", HttpStatus.BAD_REQUEST);
+            else return new ResponseEntity<>("Delete successfullly", HttpStatus.OK);
         } catch (Exception e) {
             logging.error("Internal error in deleting follow entity");
             return new ResponseEntity<>("Internal error", HttpStatus.INTERNAL_SERVER_ERROR);

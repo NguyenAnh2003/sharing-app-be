@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface SaveRepository extends MongoRepository<Save, String> {
+    Optional<List<Save>> findAllByUserId(ObjectId userId);
     Optional<List<Save>> findAllByPostId(ObjectId postId);
     Optional<Save> findByPostIdAndUserId(ObjectId postId, ObjectId userId);
     Optional<Boolean> existsByPostIdAndUserId(ObjectId postId, ObjectId userId);
