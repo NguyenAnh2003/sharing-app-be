@@ -11,5 +11,4 @@ public class RegisterRequest{
     private String password;
     private String avatarURL;
     private String gender;
-
 }
