@@ -39,11 +39,7 @@ public class UserService {
         try {
             logging.info("get user by userId service class");
             User found = userRepository.findUserById(new ObjectId(id)).orElseThrow();
-            User user = new User(found.getId(),
-                    found.getName(),
-                    found.getGender(),
-                    found.getAvatarURL(),
-                    found.getTimestamp());
+            User user = new User(found.getId(), found.getName(), found.getGender(), found.getAvatarURL(), found.getTimestamp());
             return mapper.apply(user);
         } catch (Exception e) {
             logging.error("Internal error", e.getMessage());
@@ -54,10 +50,7 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         try {
             logging.info("get all users in service class");
-            return userRepository.findAll()
-                    .stream()
-                    .map(mapper)
-                    .collect(Collectors.toList());
+            return userRepository.findAll().stream().map(mapper).collect(Collectors.toList());
         } catch (Exception e) {
             logging.error("Internal error cannot get all users");
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
