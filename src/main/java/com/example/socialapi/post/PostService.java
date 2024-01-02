@@ -2,11 +2,10 @@ package com.example.socialapi.post;
 
 import com.example.socialapi.category.CategoryRepository;
 import com.example.socialapi.category.dto.EmbeddedCategoryMapper;
-import com.example.socialapi.follow.Follow;
+import com.example.socialapi.follow.FollowService;
+import com.example.socialapi.follow.dto.FollowDTO;
 import com.example.socialapi.post.dto.PostDTO;
 import com.example.socialapi.post.dto.PostDTOMapper;
-import com.example.socialapi.post.requests.CreatePostReq;
-import com.example.socialapi.post.requests.UpdatePostReq;
 import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,13 +23,16 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class PostService {
+
     private final PostRepository repository;
     private final CategoryRepository cateRepository;
     private final UserRepository userRepository;
     private final PostDTOMapper mapper;
     private final EmbeddedUserMapper userMapper;
     private final EmbeddedCategoryMapper categoryMapper;
+    private final FollowService followService;
     private static final Logger logging = LoggerFactory.getLogger(PostService.class);
+
     /* create */
     public PostDTO createPostService(String userId, String categoryId,
                                      String title, String description,
@@ -44,6 +45,7 @@ public class PostService {
                 imageURL, LocalDateTime.now());
         return mapper.apply(repository.save(post));
     }
+
     /* update */
     public PostDTO updatePostService(String id, String userId,
                                      String categoryId, String title,
@@ -56,30 +58,25 @@ public class PostService {
         // set
         return mapper.apply(repository.save(post));
     }
+
     /* read */
     public List<PostDTO> getAll(String userId) {
-        /**
-         * get All post for home page
-         * by using userId to get user posts
-         * userId -> followerId
-         * join followerId to postId
-         * if not return Array[]
-         */
         List<Post> listOfPosts = new ArrayList<Post>();
+        listOfPosts.clear();
         // define posts array for result fetching
         List<Post> posts = repository.findAllByUserId(userId).orElseThrow();
         if(posts.isEmpty()) return Collections.emptyList();
         else listOfPosts.addAll(posts); // add all posts fetched by userId
-        // fetching followingId by userId
-        List<Post> followingUsersPosts = new ArrayList<Post>();
-        List<Follow> followingUsers = new ArrayList<>(); // get following users by userId
+        List<Post> followingUsersPosts = new ArrayList<Post>(); // following users posts
+        List<FollowDTO> followingUsers = followService.getFollowingUsers(userId); // get following users by userId
         if(followingUsers.isEmpty()) return Collections.emptyList();
         else {followingUsers.forEach(
-                follow -> {
-                    followingUsersPosts.addAll(repository.findAllByUserId(String.valueOf(follow.getFollowingId())).orElseThrow());
-                    listOfPosts.addAll(followingUsersPosts);
-                }
-        );};
+            follow -> {
+                followingUsersPosts.addAll(repository.findAllByUserId(String.valueOf(follow.getFollowingId())).orElseThrow());
+                listOfPosts.addAll(followingUsersPosts); // add to result
+                followingUsersPosts.clear(); // remove init array after adding
+            }
+        );}
         return listOfPosts.isEmpty() ? Collections.emptyList() : listOfPosts.stream().map(mapper).collect(Collectors.toList());
     }
 

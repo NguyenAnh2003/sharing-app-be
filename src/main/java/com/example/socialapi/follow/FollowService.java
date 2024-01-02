@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class FollowService {
+
     private final FollowRepository followRepository;
     private final FollowDTOMapper mapper;
 
