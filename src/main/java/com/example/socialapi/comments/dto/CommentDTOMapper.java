@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class CommentDTOMapper implements Function<Comment, CommnetDTO> {
+public class CommentDTOMapper implements Function<Comment, CommentDTO> {
 
     @Override
-    public CommnetDTO apply(Comment comment) {
-        return new CommnetDTO(comment.getId(),
+    public CommentDTO apply(Comment comment) {
+        return new CommentDTO(comment.getId(),
                 comment.getContent(),
                 comment.getUser(),
-                comment.getPostId().toString());
+                comment.getPostId().toString(),
+                comment.getTimestamp());
     }
 }
