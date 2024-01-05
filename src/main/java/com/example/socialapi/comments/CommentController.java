@@ -44,11 +44,11 @@ public class CommentController {
         }
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<CommentDTO> updateComment(@RequestBody UpdateCommentReq req) {
+    @PutMapping(value = "/update/{commentId}")
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable String commentId, @RequestBody UpdateCommentReq req) {
         try {
             logging.debug("updating comment");
-            return ResponseEntity.ok(service.updateCommentService(req.getId(), req.getUserId(), req.getPostId(), req.getContent()));
+            return ResponseEntity.ok(service.updateCommentService(commentId, req.getUserId(), req.getPostId(), req.getContent()));
         } catch (Exception e) {
             logging.error("cannot update comment controller class");
             return new ResponseEntity("Internal error cannot update comment", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -23,11 +23,11 @@ public class UserController {
     private final UserService userService;
     private static final Logger logging = LoggerFactory.getLogger(UserController.class);
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<?> userUpdate(@RequestBody UpdateRequest req) {
+    @PutMapping(value = "/update/{userId}")
+    public ResponseEntity<?> userUpdate(@PathVariable String userId, @RequestBody UpdateRequest req) {
         try {
             logging.info("updating user by userId");
-            UserDTO user = userService.updateInfo(req.getUserId(), req.getName(), req.getGender());
+            UserDTO user = userService.updateInfo(userId, req.getName(), req.getGender());
             if(user != null) return ResponseEntity.ok(user);
             else return new ResponseEntity("Cannot update b/c invalid info", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

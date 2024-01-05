@@ -40,11 +40,11 @@ public class PostController {
         }
     }
 
-    @PutMapping(value = "/{id}/update")
-    public ResponseEntity<PostDTO> updatePost(@PathVariable String id, @RequestBody UpdatePostReq req) {
+    @PutMapping(value = "/update/{postId}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable String postId, @RequestBody UpdatePostReq req) {
         try {
             logging.info("update post from post controller");
-            PostDTO updatedPost = service.updatePostService(id, req.getUserId(),
+            PostDTO updatedPost = service.updatePostService(postId, req.getUserId(),
                     req.getCategoryId(), req.getTitle(), req.getDescription(),
                     req.getImageURL());
             if(updatedPost != null) return ResponseEntity.ok(updatedPost);
