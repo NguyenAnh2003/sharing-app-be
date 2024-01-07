@@ -34,12 +34,12 @@ public class LikeService {
         }
     }
 
-    public Boolean deleteLikeEntity(ObjectId postId, ObjectId userId) {
+    public Boolean deleteLikeEntity(String postId, String userId) {
         try {
             logging.info("delete like record service class");
             logging.debug("debugging delete like record service class");
-            likeRepository.deleteByPostIdAndUserId(postId, userId);
-            return likeRepository.existsByPostIdAndUserId(postId, userId)
+            likeRepository.deleteByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId));
+            return likeRepository.existsByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId))
                     .orElseThrow();
         } catch (Exception e) {
             logging.error("cannot delete like record service class");
@@ -48,10 +48,10 @@ public class LikeService {
     }
 
     /* read likes */
-    public List<LikeDTO> getLikesByPostId(ObjectId postId) {
+    public List<LikeDTO> getLikesByPostId(String postId) {
         try {
             logging.info("get all like records by postId");
-            return likeRepository.findAllByPostId(postId).orElseThrow()
+            return likeRepository.findAllByPostId(new ObjectId(postId)).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());

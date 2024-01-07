@@ -40,8 +40,9 @@ public class LikeController {
     public ResponseEntity<?> deleteLikeAct(@PathVariable String postId, @PathVariable String userId) {
         try {
             logging.debug("debugging delete like record");
-            service.deleteLikeEntity(new ObjectId(postId),new ObjectId(userId));
-            return ResponseEntity.noContent().build();
+            Boolean exist = service.deleteLikeEntity(postId,userId);
+            if(!exist) return new ResponseEntity("Unliked post", HttpStatus.NO_CONTENT);
+            else return new ResponseEntity("Internal error cannot delete like record", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             logging.error("internal error cannot delete like record");
             return new ResponseEntity("Internal error cannot delete like record", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,7 +53,7 @@ public class LikeController {
     public ResponseEntity<List<LikeDTO>> fetchAllByPostId(@PathVariable String postId) {
         try {
             logging.debug("debugging get all like record");
-            return ResponseEntity.ok(service.getLikesByPostId(new ObjectId(postId)));
+            return ResponseEntity.ok(service.getLikesByPostId(postId));
         } catch (Exception e) {
             logging.error("Internal error cannot get all like records");
             return new ResponseEntity("Internal error cannot get all like records", HttpStatus.INTERNAL_SERVER_ERROR);

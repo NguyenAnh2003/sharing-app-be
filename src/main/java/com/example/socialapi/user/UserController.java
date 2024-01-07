@@ -41,7 +41,7 @@ public class UserController {
         try {
             logging.info("get user info");
             UserDTO user = userService.getUserInfo(userId); // init user dto
-            if(user != user) return ResponseEntity.ok(user);
+            if(user != null) return ResponseEntity.ok(user);
             else return new ResponseEntity("Cannot get user info", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logging.error("Internal error cannot get user info");

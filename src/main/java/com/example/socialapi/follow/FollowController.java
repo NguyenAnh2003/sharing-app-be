@@ -59,7 +59,7 @@ public class FollowController {
             logging.info("delete follow entity with userId and followingUserId");
             Boolean exist = followService.deleteFollowingUser(userId, followingUserId);
             if(exist) return new ResponseEntity<>("Cannot unfollow this person", HttpStatus.BAD_REQUEST);
-            else return new ResponseEntity<>("Delete successfullly", HttpStatus.OK);
+            else return new ResponseEntity<>("Delete successfullly", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             logging.error("Internal error in deleting follow entity");
             return new ResponseEntity<>("Internal error", HttpStatus.INTERNAL_SERVER_ERROR);

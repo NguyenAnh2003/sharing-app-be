@@ -73,8 +73,8 @@ public class CommentController {
             logging.debug("deleting comment controller class");
             Boolean exist = service.deleteCommentService(id);
             /* return 204 no content */
-            if(exist) return new ResponseEntity("delete sucessfully", HttpStatus.NO_CONTENT);
-            else return new ResponseEntity("Delete failed cannot find comment record", HttpStatus.BAD_REQUEST);
+            if(exist) return new ResponseEntity("Delete failed cannot find comment record", HttpStatus.INTERNAL_SERVER_ERROR);
+            else return new ResponseEntity("Delete comment successfully", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             logging.error("cannot delete comment controller class");
             return new ResponseEntity("Cannot delete comment from this post", HttpStatus.INTERNAL_SERVER_ERROR);

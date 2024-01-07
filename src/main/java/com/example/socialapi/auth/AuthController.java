@@ -31,7 +31,7 @@ public class AuthController {
             @ApiResponse(description = "Success",responseCode = "200"),
             @ApiResponse(description = "Unauthorized",responseCode = "401")})
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/signup")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         try {
             logging.info("register method");
@@ -44,8 +44,11 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/signin")
     public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginRequest req) {
+        /**
+         * login controller -> authenticate user
+         */
         try {
             logging.info("login method authentication");
             logging.debug("authenticating user");
