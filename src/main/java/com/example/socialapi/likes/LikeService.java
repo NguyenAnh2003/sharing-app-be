@@ -5,6 +5,8 @@ import com.example.socialapi.likes.dto.LikeDTOMapper;
 import com.example.socialapi.likes.request.LikeReq;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,27 +15,49 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class LikeService {
+
     private final LikeRepository likeRepository;
     private final LikeDTOMapper mapper;
-    public LikeDTO createLikeEntity(LikeReq req) {
-        Like l = new Like(new ObjectId(req.getUserId()),
-                new ObjectId(req.getPostId()));
+    private static final Logger logging = LoggerFactory.getLogger(LikeService.class);
 
-        return mapper.apply(likeRepository.save(l));
+    public LikeDTO createLikeEntity(String userId, String postId) {
+        try {
+            logging.info("create like record service class");
+            logging.debug("debugging create like record service class");
+            Like l = new Like(new ObjectId(userId),
+                    new ObjectId(postId));
+
+            return mapper.apply(likeRepository.save(l));
+        } catch (Exception e) {
+            logging.error("cannot create like record service class");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
-    public String deleteLikeEntity(ObjectId postId, ObjectId userId) {
-//        Like o = likeRepository.findByPostIdAndUserId(postId, userId)
-//                .orElseThrow();
-        likeRepository.deleteByPostIdAndUserId(postId, userId);
-        boolean exist = likeRepository.existsByPostIdAndUserId(postId, userId)
-                .orElseThrow();
-        return  exist ? "Failed" : "Deleted";
+
+    public Boolean deleteLikeEntity(String postId, String userId) {
+        try {
+            logging.info("delete like record service class");
+            logging.debug("debugging delete like record service class");
+            likeRepository.deleteByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId));
+            return likeRepository.existsByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId))
+                    .orElseThrow();
+        } catch (Exception e) {
+            logging.error("cannot delete like record service class");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
+
     /* read likes */
-    public List<LikeDTO> getLikesByPostId(ObjectId postId) {
-        return likeRepository.findAllByPostId(postId).orElseThrow()
-                .stream()
-                .map(mapper)
-                .collect(Collectors.toList());
+    public List<LikeDTO> getLikesByPostId(String postId) {
+        try {
+            logging.info("get all like records by postId");
+            return likeRepository.findAllByPostId(new ObjectId(postId)).orElseThrow()
+                    .stream()
+                    .map(mapper)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logging.error("cannot get like records by postId service class");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 }

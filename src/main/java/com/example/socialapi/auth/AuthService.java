@@ -13,9 +13,12 @@ import com.example.socialapi.user.UserRepository;
 import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.dto.UserDTOMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,38 +34,56 @@ public class AuthService {
     private final MyAuthProvider myAuthProvider;
     private final UserDTOMapper mapper;
     private final AuthDTOMapper authDTOMapper;
+    private static final Logger logging = LoggerFactory.getLogger(AuthService.class);
 
-    public UserDTO register(RegisterRequest req) {
-        /**
-         * return result for controller
-         */
-        User user = new User(req.getName(),
-                req.getGmail(),
-                passwordEncoder.encode(req.getPassword()),
-                req.getGender(),
-                req.getAvatarURL(),
-                LocalDateTime.now());
-        User newUser = repository.save(user);
-        return mapper.apply(newUser);
+    public UserDTO register(String name, String gmail, String password,
+                            String avatarURL,String gender) {
+        try {
+            logging.info("register method service class");
+            User user = new User(name, gmail, passwordEncoder.encode(password), gender,
+                    avatarURL, LocalDateTime.now());
+            User newUser = repository.save(user);
+            return mapper.apply(newUser);
+        } catch (Exception e) {
+            logging.error("Internal error cannot register");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 
     public TokenDTO login(LoginRequest req) {
-        // if gmail and pass correct // check before sending
-        authenticate(req.getGmail(), req.getPassword());
-        User user = repository.findUsersByGmail(req.getGmail()).get();
-        String token = jwtService.tokenGenerator(user);
-        return new TokenDTO(token);
+        try {
+            logging.info("login method");
+            logging.debug("authenticating user");
+            authenticate(req.getGmail(), req.getPassword()); // authenticate with MyAuthProvider
+            User user = repository.findUsersByGmail(req.getGmail()).get();
+            String token = jwtService.tokenGenerator(user);
+            return new TokenDTO(token);
+        } catch (Exception e) {
+            logging.error("Internal error cannot authenticate");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 
     private void authenticate(String gmail, String password) {
-        myAuthProvider.authenticate(new UsernamePasswordAuthenticationToken(
-                gmail, password
-        ));
+        try {
+            logging.info("authenticate function auth service");
+            logging.debug("authenticating with auth provider");
+            myAuthProvider.authenticate(new UsernamePasswordAuthenticationToken(
+                    gmail, password
+            ));
+        } catch (Exception e) {
+            logging.error("Internal error cannot authenticate");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 
     public AuthDTO getCurrentUserService() {
-        /* Solution */
-        /* https://stackoverflow.com/questions/32052076/how-to-get-the-current-logged-in-user-object-from-spring-security */
-        return authDTOMapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        try {
+            logging.info("get signed in user");
+            return authDTOMapper.apply((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        } catch (Exception e) {
+            logging.error("Internal error cannot get current user");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 }

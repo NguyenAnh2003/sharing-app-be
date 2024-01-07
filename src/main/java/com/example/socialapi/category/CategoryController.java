@@ -5,6 +5,11 @@ import com.example.socialapi.category.request.CreateCategoryRequest;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +21,31 @@ import java.util.List;
 @Tag(name = "Category")
 @SecurityRequirement(name = "bearerAuth")
 public class CategoryController {
+
     private final CategoryService cateService;
+    private static final Logger logging = LoggerFactory.getLogger(CategoryController.class);
 
     @PostMapping(value = "/seed")
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CreateCategoryRequest req) {
-        return ResponseEntity.ok(cateService.createCateService(req));
+        try {
+            logging.debug("debugging creating categories");
+            return ResponseEntity.ok(cateService.createCateService(req));
+        } catch (Exception e) {
+            logging.error("Internal error cannot create categories");
+            return new ResponseEntity("cannot create categories", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // getALl
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> fetchCategories() {
-        return ResponseEntity.ok(cateService.getAllCategory());
+        try {
+            logging.debug("getting all categories");
+            return ResponseEntity.ok(cateService.getAllCategory());
+        } catch (Exception e) {
+            logging.error("Internal error cannot get all categories");
+            return new ResponseEntity("cannot get all categories", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

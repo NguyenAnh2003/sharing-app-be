@@ -4,6 +4,9 @@ import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.dto.UserDTOMapper;
 import com.example.socialapi.user.requests.UpdateRequest;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,30 +18,42 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDTOMapper mapper;
+    private static final Logger logging = LoggerFactory.getLogger(UserService.class);
 
-    public UserDTO updateInfo(String id, UpdateRequest req) {
-        User user = userRepository.findUsersById(id).orElseThrow();
-        user.setName(req.getName());
-        user.setGender(req.getGender());
-        userRepository.save(user);
-        return mapper.apply(user);
+    public UserDTO updateInfo(String userId, String name, String gender) {
+        try {
+            logging.info("update user in service class w userId");
+            User user = userRepository.findUserById(new ObjectId(userId)).orElseThrow();
+            user.setName(name);
+            user.setGender(gender);
+            User savedUser = userRepository.save(user);
+            return mapper.apply(savedUser);
+        } catch (Exception e) {
+            logging.error("Internal error", e.getMessage());
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 
-    /* Convert timestamp */
     public UserDTO getUserInfo(String id) {
-        User found = userRepository.findUsersById(id).orElseThrow();
-        User user = new User(found.getId(),
-                found.getName(),
-                found.getGender(),
-                found.getAvatarURL(),
-                found.getTimestamp());
-        return mapper.apply(user);
+        /* get by userId */
+        try {
+            logging.info("get user by userId service class");
+            User found = userRepository.findUserById(new ObjectId(id)).orElseThrow();
+            User user = new User(found.getId(), found.getName(), found.getGender(), found.getAvatarURL(), found.getTimestamp());
+            return mapper.apply(user);
+        } catch (Exception e) {
+            logging.error("Internal error", e.getMessage());
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 
     public List<UserDTO> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(mapper)
-                .collect(Collectors.toList());
+        try {
+            logging.info("get all users in service class");
+            return userRepository.findAll().stream().map(mapper).collect(Collectors.toList());
+        } catch (Exception e) {
+            logging.error("Internal error cannot get all users");
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
     }
 }
