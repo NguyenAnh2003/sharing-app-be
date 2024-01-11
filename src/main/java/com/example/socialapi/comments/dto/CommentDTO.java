@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentDTO {
     private String id, content;
-    private EmbeddedUser user;
+    private String userId;
     private String postId;
     private LocalDateTime timestamp;
 }

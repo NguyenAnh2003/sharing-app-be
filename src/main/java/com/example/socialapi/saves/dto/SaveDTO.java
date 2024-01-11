@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SaveDTO {
-    private String id, userId;
-    private EmbeddedPost post;
+    private String id, userId, postId;
 }

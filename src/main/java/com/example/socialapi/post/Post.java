@@ -16,7 +16,7 @@ public class Post {
     @Id
     private String id;
     /* userId,  categoryId */
-    private EmbeddedUser user;
+    private String userId;
     private EmbeddedCategory category;
     // object embedded data user
     // Denormalization
@@ -27,8 +27,8 @@ public class Post {
     private String imageURL;
     private LocalDateTime timestamp;
 
-    public Post(EmbeddedUser user, EmbeddedCategory category, String title, String description, String imageURL, LocalDateTime timestamp) {
-        this.user = user;
+    public Post(String userId, EmbeddedCategory category, String title, String description, String imageURL, LocalDateTime timestamp) {
+        this.userId = userId;
         this.category = category;
         this.title = title;
         this.description = description;
@@ -36,9 +36,9 @@ public class Post {
         this.timestamp = timestamp;
     }
 
-    public Post(String id, EmbeddedUser user, EmbeddedCategory category, String title, String description, String imageURL, LocalDateTime timestamp) {
+    public Post(String id, String userId, EmbeddedCategory category, String title, String description, String imageURL, LocalDateTime timestamp) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.category = category;
         this.title = title;
         this.description = description;

@@ -10,7 +10,7 @@ public class PostDTOMapper implements Function<Post, PostDTO> {
     @Override
     public PostDTO apply(Post post) {
         return new PostDTO(post.getId().toString(),
-                post.getUser(),
+                post.getUserId(),
                 post.getCategory(),
                 post.getTitle(), post.getDescription(),
                 post.getImageURL(), post.getTimestamp());

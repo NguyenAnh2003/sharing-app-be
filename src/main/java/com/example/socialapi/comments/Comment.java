@@ -16,19 +16,19 @@ public class Comment {
     @Id
     private String id;
     private ObjectId postId;
-    private EmbeddedUser user;
+    private String userId;
     private String content;
     private LocalDateTime timestamp;
 
-    public Comment(String id, EmbeddedUser user, ObjectId postId, String content, LocalDateTime timestamp) {
+    public Comment(String id, String userId, ObjectId postId, String content, LocalDateTime timestamp) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.postId = postId;
         this.content = content;
         this.timestamp = timestamp;
     }
-    public Comment(EmbeddedUser user, ObjectId postId, String content, LocalDateTime timestamp) {
-        this.user = user;
+    public Comment(String userId, ObjectId postId, String content, LocalDateTime timestamp) {
+        this.userId = userId;
         this.postId = postId;
         this.content = content;
         this.timestamp = timestamp;

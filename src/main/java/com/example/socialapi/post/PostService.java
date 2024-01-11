@@ -6,13 +6,10 @@ import com.example.socialapi.follow.FollowService;
 import com.example.socialapi.follow.dto.FollowDTO;
 import com.example.socialapi.post.dto.PostDTO;
 import com.example.socialapi.post.dto.PostDTOMapper;
-import com.example.socialapi.user.UserRepository;
-import com.example.socialapi.user.dto.EmbeddedUserMapper;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,9 +23,7 @@ public class PostService {
 
     private final PostRepository repository;
     private final CategoryRepository cateRepository;
-    private final UserRepository userRepository;
     private final PostDTOMapper mapper;
-    private final EmbeddedUserMapper userMapper;
     private final EmbeddedCategoryMapper categoryMapper;
     private final FollowService followService;
     private static final Logger logging = LoggerFactory.getLogger(PostService.class);
@@ -39,7 +34,7 @@ public class PostService {
                                      String imageURL) {
         try {
             logging.info("creating post in service");
-            Post post = new Post(userMapper.apply(userRepository.findUserById(new ObjectId(userId)).orElseThrow(() -> new UsernameNotFoundException("User not found"))),
+            Post post = new Post(userId,
                     categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()),
                     title,
                     description,
@@ -77,18 +72,18 @@ public class PostService {
             listOfPosts.clear();
             // define posts array for result fetching
             List<Post> posts = repository.findAllByUserId(userId).orElseThrow();
-            if(posts.isEmpty()) return Collections.emptyList();
-            else listOfPosts.addAll(posts); // add all posts fetched by userId
+//            if(posts.isEmpty()) return Collections.emptyList();
+            listOfPosts.addAll(posts); // add all posts fetched by userId
             List<Post> followingUsersPosts = new ArrayList<Post>(); // following users posts
             List<FollowDTO> followingUsers = followService.getFollowingUsers(userId); // get following users by userId
-            if(followingUsers.isEmpty()) return Collections.emptyList();
-            else {followingUsers.forEach(
+//            if(followingUsers.isEmpty()) return Collections.emptyList();
+            followingUsers.forEach(
                     follow -> {
                         followingUsersPosts.addAll(repository.findAllByUserId(String.valueOf(follow.getFollowingId())).orElseThrow());
                         listOfPosts.addAll(followingUsersPosts); // add to result
-                        followingUsersPosts.clear(); // remove init array after adding
+//                        followingUsersPosts.clear(); // remove init array after adding
                     }
-            );}
+            );
             return listOfPosts.isEmpty() ? Collections.emptyList() : listOfPosts.stream().map(mapper).collect(Collectors.toList());
         } catch (Exception e) {
             logging.error("Internal error cannot get all posts");

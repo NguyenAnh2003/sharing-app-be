@@ -27,8 +27,7 @@ public class FollowService {
         try {
             logging.info("create follow record service class");
             logging.debug("debugging create follow record service class");
-            Follow object = new Follow(new ObjectId(userId),
-                    new ObjectId(followingUserId), LocalDateTime.now());
+            Follow object = new Follow(userId, followingUserId, LocalDateTime.now());
             return mapper.apply(followRepository.save(object));
         } catch (Exception e) {
             logging.error("Internal error cannot create follow record");
@@ -42,7 +41,7 @@ public class FollowService {
             logging.info("get following users service class");
             logging.debug("debugging get all following users by userId");
             return followRepository
-                    .findAllByFollowerId(new ObjectId(userId)).orElseThrow()
+                    .findAllByFollowerId(userId).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());
@@ -56,10 +55,8 @@ public class FollowService {
     public Boolean deleteFollowingUser(String userId, String followingUserId) {
         try {
             logging.debug("debugging deleting following user");
-            followRepository.deleteByFollowerIdAndFollowingId(new ObjectId(userId),
-                    new ObjectId(followingUserId));
-            return followRepository.existsByFollowerIdAndFollowingId(new ObjectId(userId),
-                    new ObjectId(followingUserId)).orElseThrow();
+            followRepository.deleteByFollowerIdAndFollowingId(userId, followingUserId);
+            return followRepository.existsByFollowerIdAndFollowingId(userId, followingUserId).orElseThrow();
         } catch (Exception e) {
             logging.error("cannot unfollow user");
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());

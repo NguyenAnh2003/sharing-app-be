@@ -10,6 +10,6 @@ public class SaveDTOMapper implements Function<Save, SaveDTO> {
     public SaveDTO apply(Save save) {
         return new SaveDTO(save.getId(),
                 save.getUserId().toString(),
-                save.getPost());
+                save.getPostId());
     }
 }

@@ -12,7 +12,7 @@ public class CommentDTOMapper implements Function<Comment, CommentDTO> {
     public CommentDTO apply(Comment comment) {
         return new CommentDTO(comment.getId(),
                 comment.getContent(),
-                comment.getUser(),
+                comment.getUserId(),
                 comment.getPostId().toString(),
                 comment.getTimestamp());
     }

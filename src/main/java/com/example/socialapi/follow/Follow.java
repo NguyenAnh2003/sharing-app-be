@@ -15,18 +15,18 @@ public class Follow {
     @Id
     private String id;
     /* userId ~ current user */
-    private ObjectId followerId;
+    private String followerId;
     /* userId are followed */
-    private ObjectId followingId;
+    private String followingId;
     private LocalDateTime timestamp;
 
-    public Follow(ObjectId userId, ObjectId followingUserId, LocalDateTime timestamp) {
+    public Follow(String userId, String followingUserId, LocalDateTime timestamp) {
         this.followerId = userId;
         this.followingId = followingUserId;
         this.timestamp = timestamp;
     }
 
-    public Follow(String id, ObjectId userId, ObjectId followingUserId) {
+    public Follow(String id, String userId, String followingUserId) {
         this.id = id;
         this.followerId = userId;
         this.followingId = followingUserId;

@@ -29,7 +29,7 @@ public class SaveController {
     public ResponseEntity<SaveDTO> createEntity(@RequestBody SaveReq req) {
         try {
             logging.debug("create save entity");
-            return ResponseEntity.ok(service.createEntityService(req));
+            return ResponseEntity.ok(service.createEntityService(req.getPostId(), req.getUserId()));
         } catch (Exception e) {
             logging.error("Internal error cannot save post");
             return new ResponseEntity("Internal error cannot save post", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -37,7 +37,7 @@ public class SaveController {
     }
 
     /* get saves by postId */
-    @GetMapping(value = "/{postId}")
+    @GetMapping(value = "p/{postId}")
     public ResponseEntity<List<SaveDTO>> fetchAllByPostId(@PathVariable String postId) {
         try {
             logging.debug("get all saved posts by postId");
@@ -49,7 +49,7 @@ public class SaveController {
     }
 
     /* get all by userId */
-    @GetMapping(value = "/{userId}")
+    @GetMapping(value = "u/{userId}")
     public ResponseEntity<List<SaveDTO>> fetchAllByUserId(@PathVariable String userId) {
         try {
             logging.debug("get all saved posts by userId");
@@ -66,7 +66,7 @@ public class SaveController {
         try {
             logging.debug("deleting saved post");
             Boolean exist = service.deleteEntityService(postId,userId);
-            if(exist == Boolean.FALSE) return new ResponseEntity("Delete successfully", HttpStatus.OK);
+            if(exist == Boolean.FALSE) return new ResponseEntity("Delete successfully", HttpStatus.NO_CONTENT);
             else return new ResponseEntity("Cannot delete saved post", HttpStatus.INTERNAL_SERVER_ERROR); // can be server error
         } catch (Exception e) {
             logging.error("Internal error cannot delete saved post");
