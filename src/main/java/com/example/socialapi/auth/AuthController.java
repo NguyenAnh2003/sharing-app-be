@@ -37,7 +37,8 @@ public class AuthController {
             logging.info("register method");
             UserDTO result = authService.register(req.getName(), req.getGmail(), req.getPassword(),
                                                     req.getAvatarURL(), req.getGender());
-            return new ResponseEntity<>("Register successfully", HttpStatus.OK);
+            if(result != null) return new ResponseEntity<>("Register successfully", HttpStatus.OK);
+            else return new ResponseEntity("Invalid info provided", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logging.error("cannot register b.c invalid info");
             return new ResponseEntity("Cannot register", HttpStatus.BAD_REQUEST);
@@ -68,7 +69,7 @@ public class AuthController {
             return ResponseEntity.ok(authService.getCurrentUserService());
         } catch (Exception e) {
             logging.error("Internal error cannot get current user");
-            return new ResponseEntity("Internal error cannot get current user", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Internal error cannot get current user", HttpStatus.FORBIDDEN);
         }
     }
 }
