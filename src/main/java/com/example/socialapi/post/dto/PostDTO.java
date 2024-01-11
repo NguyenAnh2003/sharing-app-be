@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class PostDTO {
     private String id;
     /* Denormalization */
-    private EmbeddedUser user;
+    private String userId;
     private EmbeddedCategory category;
     private String title, description;
     private String imageURL;

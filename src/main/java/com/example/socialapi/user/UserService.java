@@ -1,5 +1,7 @@
 package com.example.socialapi.user;
 
+import com.example.socialapi.post.Post;
+import com.example.socialapi.post.PostRepository;
 import com.example.socialapi.user.dto.UserDTO;
 import com.example.socialapi.user.dto.UserDTOMapper;
 import com.example.socialapi.user.requests.UpdateRequest;
@@ -18,12 +20,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDTOMapper mapper;
+    private final PostRepository postRepository; // post repository
     private static final Logger logging = LoggerFactory.getLogger(UserService.class);
 
     public UserDTO updateInfo(String userId, String name, String gender) {
         try {
             logging.info("update user in service class w userId");
-            User user = userRepository.findUserById(new ObjectId(userId)).orElseThrow();
+            User user = userRepository.findUserById(userId).orElseThrow();
             user.setName(name);
             user.setGender(gender);
             User savedUser = userRepository.save(user);
@@ -38,7 +41,7 @@ public class UserService {
         /* get by userId */
         try {
             logging.info("get user by userId service class");
-            User found = userRepository.findUserById(new ObjectId(id)).orElseThrow();
+            User found = userRepository.findUserById(id).orElseThrow();
             User user = new User(found.getId(), found.getName(), found.getGender(), found.getAvatarURL(), found.getTimestamp());
             return mapper.apply(user);
         } catch (Exception e) {

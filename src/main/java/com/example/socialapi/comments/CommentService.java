@@ -29,7 +29,7 @@ public class CommentService {
                                                  String content) {
         try {
             logging.debug("creating comment entity service class");
-            Comment object = new Comment(userMapper.apply(userRepository.findUserById(new ObjectId(userId)).orElseThrow()),
+            Comment object = new Comment(userId,
                     new ObjectId(postId),
                     content,
                     LocalDateTime.now());
@@ -82,8 +82,7 @@ public class CommentService {
             logging.debug("deleting comment service class");
             Comment object = repository.findById(id).orElseThrow();
             repository.delete(object);
-            boolean exist = repository.existsById(id); // checking existed comment
-            return exist;
+            return repository.existsById(id); // checking existed comment
         } catch (Exception e) {
             logging.error("cannot delete comment service class");
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());

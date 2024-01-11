@@ -56,7 +56,7 @@ public class PostController {
     }
 
     /* Read integrate with category */
-    @GetMapping(value = "/get-all")
+    @GetMapping(value = "/get-all/{userId}")
     public ResponseEntity<List<PostDTO>> fetchPosts(@PathVariable String userId) {
         try {
             logging.info("get all posts controller");
@@ -69,15 +69,15 @@ public class PostController {
     }
 
     /* getById */
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<PostDTO> fetchSinglePost(@PathVariable String id) {
+    @GetMapping(value = "/{postId}")
+    public ResponseEntity<PostDTO> fetchSinglePost(@PathVariable String postId) {
         try {
             logging.info("get single post in post controller");
-            PostDTO post = service.getPostById(id);
+            PostDTO post = service.getPostById(postId);
             if(post != null) return ResponseEntity.ok(post);
             else return new ResponseEntity("Cannot find post", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logging.error("Internal in find single post with postId", id);
+            logging.error("Internal in find single post with postId", postId);
             return new ResponseEntity("Cannot find post because of internal error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

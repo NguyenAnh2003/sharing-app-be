@@ -24,12 +24,11 @@ public class SaveService {
     private  final EmbeddedPostMapper postMapper;
     private static final Logger logging = LoggerFactory.getLogger(SaveService.class);
 
-    public SaveDTO createEntityService(SaveReq req) {
+    public SaveDTO createEntityService(String postId, String userId) {
         try {
             logging.debug("debugging create save record");
-            Save o = new Save(postMapper.apply(postRepository.findById(req.getPostId()).orElseThrow()),
-                    new ObjectId(req.getUserId()));
-            return mapper.apply(repository.save(o));
+            Save object = new Save(postId, userId);
+            return mapper.apply(repository.save(object));
         } catch (Exception e) {
             logging.error("Internal error creating save record");
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
@@ -40,7 +39,7 @@ public class SaveService {
         try {
             logging.info("get all post by postId");
             logging.debug("debugging get all posts by postId");
-            return repository.findAllByPostId(new ObjectId(postId)).orElseThrow()
+            return repository.findAllByPostId(postId).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());
@@ -54,7 +53,7 @@ public class SaveService {
         try {
             logging.info("get all post by userId");
             logging.debug("debugging get all posts by userId");
-            return repository.findAllByUserId(new ObjectId(userId)).orElseThrow()
+            return repository.findAllByUserId(userId).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());
@@ -67,8 +66,8 @@ public class SaveService {
     public Boolean deleteEntityService(String postId, String userId) {
         try {
             logging.debug("debugging delete saved post");
-            repository.deleteByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId));
-            return repository.existsByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId))
+            repository.deleteByPostIdAndUserId(postId, userId);
+            return repository.existsByPostIdAndUserId(postId, userId)
                     .orElseThrow();
         } catch (Exception e) {
             logging.error("Internal error cannot delete saved post");

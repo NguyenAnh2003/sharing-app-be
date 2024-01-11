@@ -13,17 +13,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Save {
     @Id
     private String id;
-    private EmbeddedPost post;
-    private ObjectId userId;
+    private String postId;
+    private String userId;
 
-    public Save(String id, EmbeddedPost post, ObjectId userId) {
+    public Save(String id, String postId, String userId) {
         this.id = id;
-        this.post = post;
+        this.postId = postId;
         this.userId = userId;
     }
 
-    public Save(EmbeddedPost post, ObjectId userId) {
-        this.post = post;
+    public Save(String postId, String userId) {
+        this.postId = postId;
         this.userId = userId;
     }
 

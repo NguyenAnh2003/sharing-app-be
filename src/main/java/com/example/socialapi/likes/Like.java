@@ -11,18 +11,18 @@ public class Like {
     @Id
     private String id;
     /* userId, categoryId */
-    private ObjectId userId;
-    private ObjectId postId;
+    private String userId;
+    private String postId;
 
     /* read */
-    public Like(String id, ObjectId userId, ObjectId postId) {
+    public Like(String id, String userId, String postId) {
         this.id = id;
         this.userId = userId;
         this.postId = postId;
     }
 
     /* create */
-    public Like(ObjectId userId, ObjectId postId) {
+    public Like(String userId, String postId) {
         this.userId = userId;
         this.postId = postId;
     }

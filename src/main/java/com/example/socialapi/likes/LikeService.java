@@ -24,8 +24,7 @@ public class LikeService {
         try {
             logging.info("create like record service class");
             logging.debug("debugging create like record service class");
-            Like l = new Like(new ObjectId(userId),
-                    new ObjectId(postId));
+            Like l = new Like(userId, postId);
 
             return mapper.apply(likeRepository.save(l));
         } catch (Exception e) {
@@ -38,8 +37,8 @@ public class LikeService {
         try {
             logging.info("delete like record service class");
             logging.debug("debugging delete like record service class");
-            likeRepository.deleteByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId));
-            return likeRepository.existsByPostIdAndUserId(new ObjectId(postId), new ObjectId(userId))
+            likeRepository.deleteByPostIdAndUserId(postId, userId);
+            return likeRepository.existsByPostIdAndUserId(postId, userId)
                     .orElseThrow();
         } catch (Exception e) {
             logging.error("cannot delete like record service class");
@@ -51,7 +50,7 @@ public class LikeService {
     public List<LikeDTO> getLikesByPostId(String postId) {
         try {
             logging.info("get all like records by postId");
-            return likeRepository.findAllByPostId(new ObjectId(postId)).orElseThrow()
+            return likeRepository.findAllByPostId(postId).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());
