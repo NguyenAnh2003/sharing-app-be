@@ -15,19 +15,19 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     private String id;
-    private ObjectId postId;
+    private String postId;
     private String userId;
     private String content;
     private LocalDateTime timestamp;
 
-    public Comment(String id, String userId, ObjectId postId, String content, LocalDateTime timestamp) {
+    public Comment(String id, String userId, String postId, String content, LocalDateTime timestamp) {
         this.id = id;
         this.userId = userId;
         this.postId = postId;
         this.content = content;
         this.timestamp = timestamp;
     }
-    public Comment(String userId, ObjectId postId, String content, LocalDateTime timestamp) {
+    public Comment(String userId, String postId, String content, LocalDateTime timestamp) {
         this.userId = userId;
         this.postId = postId;
         this.content = content;

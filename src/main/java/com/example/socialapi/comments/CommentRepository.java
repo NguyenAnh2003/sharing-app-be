@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, String> {
-    Optional<List<Comment>> findAllByPostId(ObjectId postId);
+    Optional<List<Comment>> findAllByPostId(String postId);
 }

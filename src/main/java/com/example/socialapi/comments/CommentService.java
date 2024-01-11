@@ -29,10 +29,7 @@ public class CommentService {
                                                  String content) {
         try {
             logging.debug("creating comment entity service class");
-            Comment object = new Comment(userId,
-                    new ObjectId(postId),
-                    content,
-                    LocalDateTime.now());
+            Comment object = new Comment(userId, postId, content, LocalDateTime.now());
             return mapper.apply(repository.save(object));
         } catch (Exception e) {
             logging.error("cannot create comment", e.getMessage());
@@ -63,7 +60,7 @@ public class CommentService {
     public List<CommentDTO> getAllCommentsService(String postId) {
         try {
             logging.debug("getting all comments by postId", postId);
-            return repository.findAllByPostId(new ObjectId(postId)).orElseThrow()
+            return repository.findAllByPostId(postId).orElseThrow()
                     .stream()
                     .map(mapper)
                     .collect(Collectors.toList());
