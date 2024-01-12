@@ -41,7 +41,7 @@ public class AuthController {
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             logging.error("Internal error");
-            return new ResponseEntity("Cannot register", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Cannot register, user already exist", HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -39,13 +39,12 @@ public class AuthService {
     public UserDTO register(String name, String gmail, String password,
                             String avatarURL) {
         try {
-            logging.info("register method service class");
             User user = new User(name, gmail, passwordEncoder.encode(password),
                     avatarURL, LocalDateTime.now());
             User newUser = repository.save(user);
             return mapper.apply(newUser);
         } catch (Exception e) {
-            logging.error("Internal error cannot register");
+            logging.error(e.getMessage());
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
         }
     }
