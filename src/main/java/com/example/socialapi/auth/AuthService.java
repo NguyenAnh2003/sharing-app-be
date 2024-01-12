@@ -50,12 +50,12 @@ public class AuthService {
         }
     }
 
-    public TokenDTO login(LoginRequest req) {
+    public TokenDTO login(String gmail, String password) {
         try {
             logging.info("login method");
             logging.debug("authenticating user");
-            authenticate(req.getGmail(), req.getPassword()); // authenticate with MyAuthProvider
-            User user = repository.findUsersByGmail(req.getGmail()).get();
+            authenticate(gmail, password); // authenticate with MyAuthProvider
+            User user = repository.findUsersByGmail(gmail).get();
             String token = jwtService.tokenGenerator(user);
             return new TokenDTO(token);
         } catch (Exception e) {

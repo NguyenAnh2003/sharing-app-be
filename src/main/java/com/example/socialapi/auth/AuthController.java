@@ -53,7 +53,7 @@ public class AuthController {
         try {
             logging.info("login method authentication");
             logging.debug("authenticating user");
-            TokenDTO accessToken = authService.login(req);
+            TokenDTO accessToken = authService.login(req.getGmail(), req.getPassword());
             return ResponseEntity.ok(accessToken);
         } catch (Exception e) {
             logging.error("cannot login user b/c invalid info");
