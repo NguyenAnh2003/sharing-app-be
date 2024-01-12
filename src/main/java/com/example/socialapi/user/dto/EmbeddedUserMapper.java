@@ -12,8 +12,7 @@ public class EmbeddedUserMapper implements Function<User, EmbeddedUser> {
         return new EmbeddedUser(
                 user.getId(),
                 user.getName(),
-                user.getAvatarURL(),
-                user.getGender()
+                user.getAvatarURL()
         );
     }
 

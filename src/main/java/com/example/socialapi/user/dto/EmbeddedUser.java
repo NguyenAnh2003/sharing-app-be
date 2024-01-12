@@ -11,5 +11,4 @@ public class EmbeddedUser {
     private String id;
     private String name;
     private String avatarURL;
-    private String gender;
 }

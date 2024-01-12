@@ -34,14 +34,14 @@ public class AuthController {
     @PostMapping(value = "/signup")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         try {
+            String tempAvatarURL = "http://res.cloudinary.com/drijaswh2/image/upload/v1705047161/pj4yopsqzlnzhnhc27bq.png";
             logging.info("register method");
             UserDTO result = authService.register(req.getName(), req.getGmail(), req.getPassword(),
-                                                    req.getAvatarURL(), req.getGender());
-            if(result != null) return new ResponseEntity<>("Register successfully", HttpStatus.OK);
-            else return new ResponseEntity("Invalid info provided", HttpStatus.BAD_REQUEST);
+                                                    tempAvatarURL);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
-            logging.error("cannot register b.c invalid info");
-            return new ResponseEntity("Cannot register", HttpStatus.BAD_REQUEST);
+            logging.error("Internal error");
+            return new ResponseEntity("Cannot register", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

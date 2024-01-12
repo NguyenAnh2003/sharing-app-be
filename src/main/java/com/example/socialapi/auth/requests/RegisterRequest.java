@@ -9,6 +9,4 @@ public class RegisterRequest{
     private String name;
     private String gmail;
     private String password;
-    private String avatarURL;
-    private String gender;
 }

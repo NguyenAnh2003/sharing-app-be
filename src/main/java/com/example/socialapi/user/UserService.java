@@ -28,7 +28,6 @@ public class UserService {
             logging.info("update user in service class w userId");
             User user = userRepository.findUserById(userId).orElseThrow();
             user.setName(name);
-            user.setGender(gender);
             User savedUser = userRepository.save(user);
             return mapper.apply(savedUser);
         } catch (Exception e) {
@@ -42,7 +41,7 @@ public class UserService {
         try {
             logging.info("get user by userId service class");
             User found = userRepository.findUserById(id).orElseThrow();
-            User user = new User(found.getId(), found.getName(), found.getGender(), found.getAvatarURL(), found.getTimestamp());
+            User user = new User(found.getId(), found.getName(), found.getAvatarURL(), found.getTimestamp());
             return mapper.apply(user);
         } catch (Exception e) {
             logging.error("Internal error", e.getMessage());

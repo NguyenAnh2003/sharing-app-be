@@ -21,24 +21,21 @@ public class User implements UserDetails {
     private String gmail;
     private String password;
     private String avatarURL;
-    private String gender;
 
     // timestamp most important?
     private LocalDateTime timestamp;
 
-    public User(String name, String gmail, String password, String gender, String avatarURL, LocalDateTime timestamp) {
+    public User(String name, String gmail, String password, String avatarURL, LocalDateTime timestamp) {
         this.name = name;
         this.gmail = gmail;
         this.password = password;
-        this.gender = gender;
         this.avatarURL = avatarURL;
         this.timestamp = timestamp;
     }
 
-    public User(String id, String name, String gender, String avatarURL, LocalDateTime timestamp) {
+    public User(String id, String name, String avatarURL, LocalDateTime timestamp) {
         this.id = id;
         this.name = name;
-        this.gender = gender;
         this.avatarURL = avatarURL;
         this.timestamp = timestamp;
     }

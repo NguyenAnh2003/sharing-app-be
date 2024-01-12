@@ -37,10 +37,10 @@ public class AuthService {
     private static final Logger logging = LoggerFactory.getLogger(AuthService.class);
 
     public UserDTO register(String name, String gmail, String password,
-                            String avatarURL,String gender) {
+                            String avatarURL) {
         try {
             logging.info("register method service class");
-            User user = new User(name, gmail, passwordEncoder.encode(password), gender,
+            User user = new User(name, gmail, passwordEncoder.encode(password),
                     avatarURL, LocalDateTime.now());
             User newUser = repository.save(user);
             return mapper.apply(newUser);
