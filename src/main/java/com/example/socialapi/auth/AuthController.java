@@ -69,7 +69,7 @@ public class AuthController {
             return ResponseEntity.ok(authService.getCurrentUserService());
         } catch (Exception e) {
             logging.error("Internal error cannot get current user");
-            return new ResponseEntity("Internal error cannot get current user", HttpStatus.FORBIDDEN);
+            return new ResponseEntity("FORBIDDEN PAGE", HttpStatus.FORBIDDEN);
         }
     }
 }
