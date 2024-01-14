@@ -1,1 +1,1 @@
-# MySocial-BE
+# Basic sharing app
