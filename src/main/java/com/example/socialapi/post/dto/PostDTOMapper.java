@@ -9,7 +9,7 @@ import java.util.function.Function;
 public class PostDTOMapper implements Function<Post, PostDTO> {
     @Override
     public PostDTO apply(Post post) {
-        return new PostDTO(post.getId().toString(),
+        return new PostDTO(post.getId(),
                 post.getUserId(),
                 post.getCategory(),
                 post.getTitle(), post.getDescription(),

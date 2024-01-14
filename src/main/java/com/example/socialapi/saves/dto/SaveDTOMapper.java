@@ -9,7 +9,7 @@ public class SaveDTOMapper implements Function<Save, SaveDTO> {
     @Override
     public SaveDTO apply(Save save) {
         return new SaveDTO(save.getId(),
-                save.getUserId().toString(),
+                save.getUserId(),
                 save.getPostId());
     }
 }

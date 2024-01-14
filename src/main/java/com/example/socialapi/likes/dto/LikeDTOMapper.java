@@ -9,7 +9,7 @@ public class LikeDTOMapper implements Function<Like, LikeDTO> {
     @Override
     public LikeDTO apply(Like like) {
         return new LikeDTO(like.getId(),
-                like.getUserId().toString(),
-                like.getPostId().toString());
+                like.getUserId(),
+                like.getPostId());
     }
 }

@@ -101,7 +101,7 @@ public class PostController {
         try {
             logging.info("deleting post with postId", postId);
             Boolean exist = service.deletePost(postId);
-            if(exist == false) return new ResponseEntity("Delete successfully", HttpStatus.NO_CONTENT);
+            if(!exist) return new ResponseEntity("Delete successfully", HttpStatus.NO_CONTENT);
             else return new ResponseEntity("Cannot delete post", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             logging.error("Internal error cannot delete post", e.getCause());

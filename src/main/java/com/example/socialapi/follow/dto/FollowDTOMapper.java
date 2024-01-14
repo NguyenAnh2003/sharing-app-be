@@ -10,7 +10,7 @@ public class FollowDTOMapper implements Function<Follow, FollowDTO> {
     @Override
     public FollowDTO apply(Follow follow) {
         return new FollowDTO(follow.getId(),
-                follow.getFollowerId().toString(),
-                follow.getFollowingId().toString());
+                follow.getFollowerId(),
+                follow.getFollowingId());
     }
 }

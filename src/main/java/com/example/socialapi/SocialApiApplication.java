@@ -21,6 +21,10 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @SpringBootApplication
 public class SocialApiApplication {
+	/* rename to sharing app
+	* with basic sharing post and following user
+	* not including chat
+	* not a complex system */
 	public static void main(String[] args) {
 		SpringApplication.run(SocialApiApplication.class, args);
 	}
