@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping(value = "/{userId}")
     public ResponseEntity<UserDTO> fetchUserInfo(@PathVariable String userId) {
         try {
-            logging.info("get user info");
+            logging.info("get user info " + userId);
             UserDTO user = userService.getUserInfo(userId); // init user dto
             if(user != null) return ResponseEntity.ok(user);
             else return new ResponseEntity("Cannot get user info", HttpStatus.NOT_FOUND);

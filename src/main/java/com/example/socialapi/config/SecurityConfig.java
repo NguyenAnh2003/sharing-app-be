@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/api/auth/**",
+                        "/api/**", // allowing all but need token all exclude signin and signup
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/v3/api-docs/**",

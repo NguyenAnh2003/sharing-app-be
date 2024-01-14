@@ -32,11 +32,10 @@ public class PostController {
             PostDTO createdPost = service.createPostService(req.getUserId(),
                     req.getCategoryId(), req.getTitle(), req.getDescription(),
                     req.getImageURL());
-            if(createdPost != null) return ResponseEntity.ok(createdPost);
-            else return new ResponseEntity("There may be invalid info you provided", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.ok(createdPost);
         } catch (Exception e) {
-            logging.error("Cannot create post because error", e.getCause());
-            return new ResponseEntity("Internal error", HttpStatus.INTERNAL_SERVER_ERROR);
+            logging.error("Cannot create post because " + e.getMessage());
+            return new ResponseEntity("Cannot create post may be title existed", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -59,7 +58,7 @@ public class PostController {
     @GetMapping(value = "/get-all/{userId}")
     public ResponseEntity<List<PostDTO>> fetchPosts(@PathVariable String userId) {
         try {
-            logging.info("get all posts controller");
+            logging.info("get all posts controller" + userId);
             List<PostDTO> listOfPost = service.getAll(userId);
             return ResponseEntity.ok(listOfPost);
         } catch (Exception e) {

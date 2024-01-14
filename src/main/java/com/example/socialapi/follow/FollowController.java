@@ -42,10 +42,9 @@ public class FollowController {
     @GetMapping(value = "/get-followers/{userId}")
     public ResponseEntity<List<FollowDTO>> getFollowersByUserId(@PathVariable String userId) {
         try {
-            logging.info("get followers by userId");
+            logging.info("get followers by userId " + userId);
             List<FollowDTO> followers = followService.getFollowingUsers(userId);
-            if(followers != null) return ResponseEntity.ok(followers);
-            else return new ResponseEntity("Cannot get followers", HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(followers);
         } catch (Exception e) {
             logging.error("Internal error in get followers w userId");
             return new ResponseEntity("Internal error", HttpStatus.INTERNAL_SERVER_ERROR);
