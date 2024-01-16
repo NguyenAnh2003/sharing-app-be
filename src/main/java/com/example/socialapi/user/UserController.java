@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<?> userUpdate(@PathVariable String userId, @RequestBody UpdateRequest req) {
         try {
             logging.info("updating user by userId");
-            UserDTO user = userService.updateInfo(userId, req.getName(), req.getGender());
+            UserDTO user = userService.updateInfo(userId, req.getName());
             if(user != null) return ResponseEntity.ok(user);
             else return new ResponseEntity("Cannot update b/c invalid info", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

@@ -23,7 +23,7 @@ public class UserService {
     private final PostRepository postRepository; // post repository
     private static final Logger logging = LoggerFactory.getLogger(UserService.class);
 
-    public UserDTO updateInfo(String userId, String name, String gender) {
+    public UserDTO updateInfo(String userId, String name) {
         try {
             logging.info("update user in service class w userId");
             User user = userRepository.findUserById(userId).orElseThrow();

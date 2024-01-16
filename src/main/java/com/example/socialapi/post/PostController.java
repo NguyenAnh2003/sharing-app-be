@@ -73,11 +73,10 @@ public class PostController {
         try {
             logging.info("get single post in post controller");
             PostDTO post = service.getPostById(postId);
-            if(post != null) return ResponseEntity.ok(post);
-            else return new ResponseEntity("Cannot find post", HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(post);
         } catch (Exception e) {
-            logging.error("Internal in find single post with postId", postId);
-            return new ResponseEntity("Cannot find post because of internal error", HttpStatus.INTERNAL_SERVER_ERROR);
+            logging.error("Internal in find single post with postId" + postId + " " + e.getMessage());
+            return new ResponseEntity("Cannot find post " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
