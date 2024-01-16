@@ -13,7 +13,7 @@ public class PostDTO {
     private String id;
     /* Denormalization */
     private String userId;
-    private EmbeddedCategory category;
+    private String categoryId;
     private String title, description;
     private String imageURL;
     private LocalDateTime timestamp;

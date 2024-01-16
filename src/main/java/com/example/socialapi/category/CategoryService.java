@@ -44,4 +44,15 @@ public class CategoryService {
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
         }
     }
+
+    /* get one */
+    public CategoryDTO getCategory(String categoryId) {
+        try {
+            logging.debug("getting all category");
+            return mapper.apply(repository.findById(categoryId).orElseThrow());
+        } catch (Exception e) {
+            logging.error("Internal error cannot get category" + e.getMessage());
+            throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());
+        }
+    }
 }

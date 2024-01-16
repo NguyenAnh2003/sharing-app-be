@@ -48,4 +48,16 @@ public class CategoryController {
         }
     }
 
+    /* get single category */
+    @GetMapping(value = "/{categoryId}")
+    public ResponseEntity<CategoryDTO> fetchCategory(@PathVariable String categoryId) {
+        try {
+            logging.info("get category" + categoryId);
+            return ResponseEntity.ok(cateService.getCategory(categoryId));
+        } catch (Exception e) {
+            logging.error("Cannot get category");
+            return new ResponseEntity("Cannot get category", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -34,10 +34,7 @@ public class PostService {
                                      String imageURL) {
         try {
             logging.info("creating post in service");
-            Post post = new Post(userId,
-                    categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()),
-                    title,
-                    description,
+            Post post = new Post(userId, categoryId, title, description,
                     imageURL, LocalDateTime.now());
             return mapper.apply(repository.save(post));
         } catch (Exception e) {
@@ -53,7 +50,7 @@ public class PostService {
         try {
             logging.info("update post with postId", id);
             Post post = repository.findById(id).orElseThrow();
-            post.setCategory(categoryMapper.apply(cateRepository.findById(categoryId).orElseThrow()));
+            post.setCategoryId(categoryId);
             post.setTitle(title);
             post.setDescription(description);
             post.setImageURL(imageURL);
