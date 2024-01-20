@@ -66,8 +66,7 @@ public class SaveController {
         try {
             logging.debug("deleting saved post");
             Boolean exist = service.deleteEntityService(postId,userId);
-            if(exist == Boolean.FALSE) return new ResponseEntity("Delete successfully", HttpStatus.NO_CONTENT);
-            else return new ResponseEntity("Cannot delete saved post", HttpStatus.INTERNAL_SERVER_ERROR); // can be server error
+            return new ResponseEntity("Delete successfully", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             logging.error("Internal error cannot delete saved post");
             return new ResponseEntity("Internal error cannot delete saved post", HttpStatus.INTERNAL_SERVER_ERROR);
