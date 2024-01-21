@@ -27,8 +27,11 @@ public class FollowService {
         try {
             logging.info("create follow record service class");
             logging.debug("debugging create follow record service class");
-            Follow object = new Follow(userId, followingUserId, LocalDateTime.now());
-            return mapper.apply(followRepository.save(object));
+            Boolean exist = followRepository.existsByFollowerIdAndFollowingId(userId, followingUserId).orElseThrow();
+            if(!exist) {
+                Follow object = new Follow(userId, followingUserId, LocalDateTime.now());
+                return mapper.apply(followRepository.save(object));
+            } else return null;
         } catch (Exception e) {
             logging.error("Internal error cannot create follow record");
             throw new RuntimeException("Message " + e.getMessage() + " Cause " + e.getCause());

@@ -32,7 +32,7 @@ public class FollowController {
                     request.getUserId(), request.getFollowingUserId());
             FollowDTO followingUser = followService.startFollowUser(request.getUserId(), request.getFollowingUserId());
             if(followingUser != null) return ResponseEntity.ok(followingUser);
-            else return new ResponseEntity("Cannot follow this person", HttpStatus.NOT_FOUND);
+            else return new ResponseEntity("You already follow this person", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logging.error("Interal error in following user");
             return new ResponseEntity<>("Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
