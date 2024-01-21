@@ -78,7 +78,7 @@ public class PostService {
                     follow -> {
                         followingUsersPosts.addAll(repository.findAllByUserId(String.valueOf(follow.getFollowingId())).orElseThrow());
                         listOfPosts.addAll(followingUsersPosts); // add to result
-//                        followingUsersPosts.clear(); // remove init array after adding
+                        followingUsersPosts.clear(); // remove init array after adding
                     }
             );
             return listOfPosts.isEmpty() ? Collections.emptyList() : listOfPosts.stream().map(mapper).collect(Collectors.toList());
